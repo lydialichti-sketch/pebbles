@@ -1451,6 +1451,35 @@ function applySettings() {
   if (!want && wakeLock && wakeLock !== "pending") { wakeLock.release().catch(() => {}); wakeLock = null; }
 }
 document.addEventListener("visibilitychange", () => applySettings());
+/* move data between the Claude version, the web app, or another phone: copy it out as text, paste it in on the other side */
+const exportText = () => JSON.stringify({ app: "pebbles", v: 1, at: Date.now(), data: dataOf() });
+function dataSheet(msg) {
+  sheet = { data: true };
+  const n = S.pebbles.length + S.boulders.length + S.mountains.length + S.dumps.length;
+  $("#sheet").innerHTML = `<div class="sheet-bg" data-act="closesheet"><div class="sheet" role="dialog" aria-label="Move my data"><span class="grab"></span><h2>Move my data</h2>
+    <div style="display:grid;gap:8px"><label>Copy it out</label>
+      <p style="margin:0;font-size:14px;color:var(--muted)">Copies all ${n} of your mountains, boulders, pebbles and pile. Paste it into Pebbles somewhere else, or keep it in Notes as a backup.</p>
+      <button class="btn primary" style="justify-content:center" data-act="datacopy">Copy my data</button>
+      ${window.claude ? "" : `<button class="btn" style="justify-content:center" data-act="datasave">Save it as a file</button>`}
+      <textarea id="dataout" readonly rows="3" style="width:100%;font:12px/1.3 ui-monospace,monospace;border-radius:12px;border:1px solid var(--line);background:var(--surface2);color:var(--muted);padding:8px" aria-label="Your data as text">${esc(exportText())}</textarea></div>
+    <div style="display:grid;gap:8px;margin-top:6px"><label>Bring it in</label>
+      <p style="margin:0;font-size:14px;color:var(--muted)">Paste data you copied from Pebbles. It's added to what's here, and nothing here gets deleted.</p>
+      <textarea id="datain" rows="3" placeholder="Paste here" style="width:100%;font:12px/1.3 ui-monospace,monospace;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px" aria-label="Paste your data here"></textarea>
+      <div style="display:flex;gap:8px"><button class="btn primary" style="flex:1;justify-content:center" data-act="dataimport">Bring it in</button>
+        <label class="btn" style="flex:1;justify-content:center;cursor:pointer">Open a file<input type="file" id="datafile" accept=".json,.txt,application/json,text/plain" style="display:none"></label></div>
+      ${msg ? `<p style="margin:0;font-size:14px;font-weight:600">${msg}</p>` : ""}</div>
+    <button class="btn" style="justify-content:center" data-act="closesheet">Done</button></div></div>`;
+  const f = $("#datafile"); if (f) f.addEventListener("change", () => { const file = f.files && f.files[0]; if (!file) return; file.text().then((t) => { $("#datain").value = t; importData(t); }); });
+}
+function importData(text) {
+  let d; try { d = JSON.parse((text || "").trim()); } catch (e) { dataSheet("That doesn't look like Pebbles data. Copy it again and paste the whole thing."); return; }
+  if (d && d.data) d = d.data;
+  if (!d || !Array.isArray(d.pebbles) || !Array.isArray(d.boulders)) { dataSheet("That doesn't look like Pebbles data. Copy it again and paste the whole thing."); return; }
+  stamp(); const before = S.pebbles.length + S.boulders.length + S.mountains.length + S.dumps.length;
+  applyData(mergeAll(d, dataOf())); scheduleCloud();
+  const added = S.pebbles.length + S.boulders.length + S.mountains.length + S.dumps.length - before;
+  dataSheet(added > 0 ? `Done! ${added} thing${added === 1 ? "" : "s"} brought in.` : "Done. Everything in there was already here.");
+}
 function settingsSheet(still) {
   const keep = still ? ($("#sheet .sheet")?.scrollTop || 0) : 0;
   sheet = { settings: true }; const pr = S.prefs;
@@ -1466,6 +1495,7 @@ function settingsSheet(still) {
       ${pr.chime !== false ? `<div class="opt" style="padding-bottom:10px">${Object.entries(SOUNDS).map(([k, [l]]) => `<button class="chip ${(pr.sound || "chime") === k ? "on" : ""}" style="display:flex;justify-content:space-between;align-items:center" data-act="setsound" data-v="${k}">${l}<span style="font-size:13px;opacity:.75">${(pr.sound || "chime") === k ? "Selected · tap to hear" : "Tap to hear"}</span></button>`).join("")}</div>` : ""}
       ${sw("awake", "Keep screen awake during a timed run", navigator.wakeLock ? "" : "Your browser may not allow this")}
     </div>
+    <button class="btn" style="justify-content:center" data-act="datasheet">Move my data (copy out or bring in)</button>
     <button class="btn" style="justify-content:center" data-act="bflynow">Send a ${isNight() ? "firefly" : "butterfly"} to the Do screen</button>
     <button class="btn" style="justify-content:center" data-act="resettips">Show the welcome guide and all hints again</button>
     <button class="btn primary" style="justify-content:center" data-act="closesheet">Done</button></div></div>`;
@@ -1898,6 +1928,12 @@ document.addEventListener("click", (e) => {
     case "setfont": S.prefs.font = d.v; render(); settingsSheet(true); return;
     case "setsound": primeAudio(); S.prefs.sound = d.v; playSound(d.v); render(); settingsSheet(true); return;
     case "setpref": S.prefs[d.k] = el.checked; render(); settingsSheet(true); return;
+    case "datasheet": dataSheet(); return;
+    case "datacopy": { const t = exportText(), ta = $("#dataout"); const ok = () => toast("<span><b>Copied</b>Now paste it into Pebbles on the other side.</span>");
+      const fallback = () => { try { ta.focus(); ta.select(); document.execCommand("copy"); ok(); } catch (e) { toast("<span>Select the text in the box and copy it.</span>"); } };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback(); return; }
+    case "datasave": { try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([exportText()], { type: "application/json" })); a.download = `pebbles-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove(); } catch (e) { toast("<span>Saving a file isn't allowed here. Use Copy my data instead.</span>"); } return; }
+    case "dataimport": importData($("#datain").value); return;
     case "bflynow": closeSheet(); S.tab = "do"; render(); bflySchedule(700); return;
     case "resettips": S.prefs.hintsOn = true; S.hints = { do: true, dump: true, shape: true }; closeSheet(); S.guide = true; S.gstep = 0; break;
     case "coachclose": closeCoach(); return;
