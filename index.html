@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
 <link rel="icon" type="image/png" href="icon-192.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Gochi+Hand&family=Tinos:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Coming+Soon&family=Tinos:wght@400;700&display=swap">
 <style>
 /* Layout: one phone-width column; a quiet header, one screen at a time, a 3-tab bar (Dump · Shape · Do). Mountains are drawn, boulders and pebbles are soft stone shapes. */
 :root{
@@ -24,7 +24,7 @@
   --pebble:#C8C3B8; --st0:#F7F6F1; --st1:#E5E3DD; --st2:#D5D2CA; --st3:#ECE2CF; --st4:#DCCAA9; --st5:#CDD0C9; --shadow:0 1px 2px rgb(38 48 42/.08),0 6px 18px rgb(38 48 42/.08);
   --f-display:"Bricolage Grotesque",ui-rounded,"Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-hand:"Gochi Hand","Segoe Print","Bradley Hand",cursive;
+  --f-hand:"Coming Soon","Segoe Print","Bradley Hand",cursive;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:var(--bg-d,#191C2B); --s0:var(--s0d,#0B0D1E); --s1:var(--s1d,#191C2B); --s2:var(--s2d,#3B2A4D); --s3:var(--s3d,#7A4A5A); --stars:1; --surface:#212826; --surface2:#29312E; --ink:#E5E9E3; --muted:#9BA59E; --line:#35403B;
@@ -53,7 +53,7 @@
   --pebble:#C8C3B8; --st0:#F7F6F1; --st1:#E5E3DD; --st2:#D5D2CA; --st3:#ECE2CF; --st4:#DCCAA9; --st5:#CDD0C9; --shadow:0 1px 2px rgb(38 48 42/.08),0 6px 18px rgb(38 48 42/.08);
   --f-display:"Bricolage Grotesque",ui-rounded,"Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-hand:"Gochi Hand","Segoe Print","Bradley Hand",cursive;
+  --f-hand:"Coming Soon","Segoe Print","Bradley Hand",cursive;
 ;color-scheme:light}
 /* font toggle in Settings: swap the handwriting for a classic serif */
 html:root.font-serif{--f-hand:"Tinos","Liberation Serif","Times New Roman",Times,serif}
@@ -144,7 +144,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 
 /* DO */
 .next{position:relative;background:var(--surface);box-shadow:var(--shadow);border-radius:46% 54% 50% 50% / 30% 34% 66% 70%;padding:44px 30px 52px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:240px;justify-content:center}
-.next h2{font-family:"Gochi Hand","Segoe Print","Bradley Hand",cursive;font-weight:400;font-size:clamp(26px,7.5vw,32px);line-height:1.2;letter-spacing:0}
+.next h2{font-family:"Coming Soon","Segoe Print","Bradley Hand",cursive;font-weight:400;font-size:clamp(26px,7.5vw,32px);line-height:1.2;letter-spacing:0}
 .trail{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
 .trail i{font-style:normal;color:var(--rock2)}
 .trail .tb{display:inline-flex;align-items:center;gap:6px}
@@ -376,7 +376,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .toggle{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted);padding:4px 2px;cursor:pointer}
 .toggle input{width:20px;height:20px;accent-color:var(--sage);flex:none}
 .runnow{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:var(--surface);border-radius:28px;padding:22px 18px;box-shadow:var(--shadow)}
-.runnow h2{font-family:"Gochi Hand","Segoe Print","Bradley Hand",cursive;font-weight:400;font-size:clamp(24px,7vw,30px);line-height:1.2;letter-spacing:0}
+.runnow h2{font-family:"Coming Soon","Segoe Print","Bradley Hand",cursive;font-weight:400;font-size:clamp(24px,7vw,30px);line-height:1.2;letter-spacing:0}
 .ring.big{width:min(184px,calc(100% - 128px));height:auto;aspect-ratio:1;flex:none}
 .eyebtn{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);color:var(--muted)}
 .eyebtn svg{width:20px;height:20px}
@@ -506,11 +506,11 @@ body.selecting .toast{bottom:calc(130px + env(safe-area-inset-bottom,0px))}
 .coach svg .rip{stroke:#5F8369;stroke-width:2.6}
 .coach svg path.ink{stroke:var(--ink)}
 .coach .tip.ink{color:var(--ink);text-shadow:none}
-.coach .tip{position:absolute;max-width:200px;font-family:"Gochi Hand","Segoe Print","Bradley Hand",cursive;font-size:22px;line-height:1.1;font-weight:400;color:#F6F3EA;text-shadow:0 1px 6px rgb(0 0 0/.5)}
+.coach .tip{position:absolute;max-width:200px;font-family:"Coming Soon","Segoe Print","Bradley Hand",cursive;font-size:22px;line-height:1.1;font-weight:400;color:#F6F3EA;text-shadow:0 1px 6px rgb(0 0 0/.5)}
 .coach .tip small{display:block;font-size:18px;font-weight:400;opacity:.85}
 .coach-foot{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));max-width:440px;margin:0 auto}
 .coach-foot .mini-link{color:#F6F3EA;font-size:14px}
-.coach-title{position:absolute;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));font-family:"Gochi Hand",cursive;font-size:20px;color:#E8D3A8;white-space:nowrap}
+.coach-title{position:absolute;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));font-family:"Coming Soon",cursive;font-size:20px;color:#E8D3A8;white-space:nowrap}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 .gear{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
 .gear svg{width:20px;height:20px}
@@ -545,7 +545,7 @@ body.has-fab .app{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
 
 
 <div class="app">
-  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.4</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.6</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
   <header class="top" id="top"></header>
   <main class="screen" id="screen"></main>
 </div>
@@ -1071,7 +1071,14 @@ function nextInRun(count) {
   else { S.run = null; toast(`<span class="boulder-ico clear"></span><span><b>Run finished</b>${count} pebble${count === 1 ? "" : "s"} moved. Nice climbing.</span>`); }
 }
 let actx;
-function primeAudio() { try { if (navigator.audioSession) navigator.audioSession.type = "playback"; actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume(); } catch (e) {} }
+let audioUnlocked = false;
+function primeAudio() { try { if (navigator.audioSession) navigator.audioSession.type = "playback"; actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume();
+  // iPhones need a sound to actually start during a tap before they'll allow sounds later; play a silent blip once
+  if (!audioUnlocked) { const b = actx.createBuffer(1, 1, 22050), src = actx.createBufferSource(); src.buffer = b; src.connect(actx.destination); src.start(0); audioUnlocked = true; } } catch (e) {}
+  try { unlockChimeClip(); } catch (e) {} }
+// phones only allow sound after a tap, so wake the sound up on every tap, not just when a run starts (covers reopening the app mid-run)
+["pointerdown", "touchend", "keydown"].forEach((t) => document.addEventListener(t, () => { if (S.run || !audioUnlocked) primeAudio(); }, { passive: true, capture: true }));
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && actx) { try { actx.resume(); } catch (e) {} } });
 /* five time's-up sounds, all made right here (no files to load) */
 function tone(f, t, dur, peak = 0.25, type = "sine", attack = 0.01) {
   const o = actx.createOscillator(), g = actx.createGain();
@@ -1087,9 +1094,37 @@ const SOUNDS = {
   marimba: ["Marimba", (t) => [[523.25, 0], [659.25, 0.14], [783.99, 0.28], [1046.5, 0.42]].forEach(([f, d]) => { tone(f, t + d, 0.6, 0.28, "sine", 0.004); tone(f * 4, t + d, 0.12, 0.05, "sine", 0.002); })],
 };
 function playSound(name) { if (!actx) return; try { actx.resume(); (SOUNDS[name] || SOUNDS.chime)[1](actx.currentTime + 0.03); } catch (e) {} }
+/* The time's-up sound also plays as a real audio clip (like music), which iPhones treat as media:
+   it isn't muted by the silent switch and doesn't get paused while you wait. The clip is made from the same tones. */
+let chimeEl = null, chimeElOn = false, chimeFor = "";
+const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=";
+function wavFrom(buf) {
+  const d = buf.getChannelData(0), n = d.length, b = new ArrayBuffer(44 + n * 2), v = new DataView(b), w = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, buf.sampleRate, true); v.setUint32(28, buf.sampleRate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, n * 2, true);
+  for (let i = 0; i < n; i++) v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, d[i])) * 0x7fff, true);
+  return URL.createObjectURL(new Blob([b], { type: "audio/wav" }));
+}
+function buildChimeClip() {
+  const name = S.prefs.sound || "chime"; if (chimeFor === name) return; chimeFor = name;
+  try {
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext, off = new OAC(1, 44100 * 5.5, 44100), keep = actx;
+    actx = off; (SOUNDS[name] || SOUNDS.chime)[1](0.03); actx = keep;
+    const done = (buf) => { if (chimeEl) { chimeEl.src = wavFrom(buf); chimeEl.load(); } };
+    const r = off.startRendering(); if (r && r.then) r.then(done); else off.oncomplete = (e) => done(e.renderedBuffer);
+  } catch (e) { chimeFor = ""; }
+}
+function unlockChimeClip() {
+  if (!chimeEl) { chimeEl = new Audio(SILENT_WAV); chimeEl.preload = "auto"; chimeEl.setAttribute("playsinline", ""); }
+  if (!chimeElOn) { chimeEl.muted = true; const p = chimeEl.play(); if (p && p.then) p.then(() => { chimeEl.pause(); chimeEl.currentTime = 0; chimeEl.muted = false; chimeElOn = true; buildChimeClip(); }, () => {}); }
+  else buildChimeClip();
+}
 function chime() {
-  if (!actx || S.prefs.chime === false) return;
-  playSound(S.prefs.sound);
+  if (S.prefs.chime === false) return;
+  try { navigator.vibrate && navigator.vibrate([180, 90, 180]); } catch (e) {}
+  const tones = () => { if (!actx) primeAudio(); if (!actx) return; const go = () => playSound(S.prefs.sound); if (actx.state !== "running") actx.resume().then(go, go); else go(); };
+  if (chimeEl && chimeElOn && chimeFor) { try { chimeEl.muted = false; chimeEl.volume = 1; chimeEl.currentTime = 0; const p = chimeEl.play(); if (p && p.catch) p.catch(tones); return; } catch (e) {} }
+  tones();
 }
 function runTick() {
   const fa = $("#finishAt"); if (fa) fa.textContent = fmtClock(finishAt());
@@ -1651,13 +1686,14 @@ function settingsSheet(still) {
   const sw = (k, label, sub) => `<label class="setrow"><span>${label}${sub ? `<small>${sub}</small>` : ""}</span><input type="checkbox" class="switch" data-act="setpref" data-k="${k}" ${pr[k] !== false ? "checked" : ""}></label>`;
   $("#sheet").innerHTML = `<div class="sheet-bg" data-act="closesheet"><div class="sheet" ${still ? 'style="animation:none"' : ""} role="dialog" aria-label="Settings"><span class="grab"></span><h2>Settings</h2>
     <div><label>Theme</label><div class="seg">${[["system", "Match phone"], ["light", "Light"], ["dark", "Dark"]].map(([v, l]) => `<button type="button" class="${(pr.theme || "system") === v ? "on" : ""}" data-act="settheme" data-v="${v}">${l}</button>`).join("")}</div></div>
-    <div><label>Font</label><div class="seg two">${[["hand", "Handwritten"], ["serif", "Serif"]].map(([v, l]) => `<button type="button" class="${(pr.font || "hand") === v ? "on" : ""}" data-act="setfont" data-v="${v}" style="font-family:${v === "serif" ? '"Tinos","Liberation Serif","Times New Roman",serif' : '"Gochi Hand",cursive'};font-size:17px">${l}</button>`).join("")}</div></div>
+    <div><label>Font</label><div class="seg two">${[["hand", "Handwritten"], ["serif", "Serif"]].map(([v, l]) => `<button type="button" class="${(pr.font || "hand") === v ? "on" : ""}" data-act="setfont" data-v="${v}" style="font-family:${v === "serif" ? '"Tinos","Liberation Serif","Times New Roman",serif' : '"Coming Soon",cursive'};font-size:17px">${l}</button>`).join("")}</div></div>
     <div><label>Background</label><div class="swatches">${Object.entries(BGS).map(([k, [l, c1, c2]]) => `<button class="swatch ${(pr.bg || "periwinkle") === k ? "on" : ""}" data-act="setbg" data-v="${k}" aria-label="${l}"><i style="background:linear-gradient(135deg, ${c1} 50%, ${c2} 50%)"></i>${l}</button>`).join("")}</div></div>
     <div>
       ${sw("hintsOn", "Hint boxes", "The little green tips on each screen")}
       ${sw("auto", "Roll into the next pebble", "In a timed run, when time's up, mark it done and start the next")}
       ${sw("chime", "Sound when time's up", "Plays while Pebbles is open. On iPhone, check the ring/silent switch")}
       ${pr.chime !== false ? `<div class="opt" style="padding-bottom:10px">${Object.entries(SOUNDS).map(([k, [l]]) => `<button class="chip ${(pr.sound || "chime") === k ? "on" : ""}" style="display:flex;justify-content:space-between;align-items:center" data-act="setsound" data-v="${k}">${l}<span style="font-size:13px;opacity:.75">${(pr.sound || "chime") === k ? "Selected · tap to hear" : "Tap to hear"}</span></button>`).join("")}</div>` : ""}
+      ${pr.chime !== false ? `<button class="btn" style="justify-content:center;margin:2px 0 10px" data-act="testchime">Test the time's-up sound</button>` : ""}
       ${sw("awake", "Keep screen awake during a timed run", navigator.wakeLock ? "" : "Your browser may not allow this")}
     </div>
     <button class="btn" style="justify-content:center" data-act="datasheet">Move my data (copy out or bring in)</button>
@@ -2129,9 +2165,10 @@ document.addEventListener("click", (e) => {
     case "settheme": S.prefs.theme = d.v; render(); settingsSheet(true); return;
     case "setbg": S.prefs.bg = d.v; render(); settingsSheet(true); return;
     case "setfont": S.prefs.font = d.v; render(); settingsSheet(true); return;
-    case "setsound": primeAudio(); S.prefs.sound = d.v; playSound(d.v); render(); settingsSheet(true); return;
+    case "setsound": primeAudio(); S.prefs.sound = d.v; chimeFor = ""; buildChimeClip(); playSound(d.v); render(); settingsSheet(true); return;
     case "setpref": S.prefs[d.k] = el.checked; render(); settingsSheet(true); return;
     case "datasheet": dataSheet(); return;
+    case "testchime": primeAudio(); setTimeout(chime, 600); return;
     case "datacopy": { LS.set("pebbles-backup-at", Date.now()); const t = exportText(), ta = $("#dataout"); const ok = () => toast("<span><b>Copied</b>Now paste it into Pebbles on the other side.</span>");
       const fallback = () => { try { ta.focus(); ta.select(); document.execCommand("copy"); ok(); } catch (e) { toast("<span>Select the text in the box and copy it.</span>"); } };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback(); return; }
