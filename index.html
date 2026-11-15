@@ -9,9 +9,9 @@
 <meta name="apple-mobile-web-app-title" content="Pebbles">
 <meta name="theme-color" content="#D9DEF5">
 <title>Pebbles</title>
-<link rel="manifest" href="manifest.webmanifest?v=2">
-<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
-<link rel="icon" type="image/png" href="icon-192.png?v=2">
+<link rel="manifest" href="manifest.webmanifest?v=3">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<link rel="icon" type="image/png" href="icon-192.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Gochi+Hand&family=Tinos:wght@400;700&display=swap">
 <style>
@@ -114,6 +114,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 
 /* header */
 .top{display:flex;align-items:center;gap:8px;padding:12px 0 6px}
+.top[hidden]{display:none}
 .focus{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:999px;padding:8px 14px;box-shadow:var(--shadow);font-size:14px;text-align:left}
 .focus span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .focus small{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;flex:none}
@@ -123,8 +124,8 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 
 .screen{padding-top:10px;display:flex;flex-direction:column;gap:18px}
 .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.hint{display:flex;gap:10px;align-items:flex-start;background:var(--dusk-soft);border-radius:14px;padding:12px 14px;font-size:14px}
-.hint svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--dusk)}
+.hint{display:flex;gap:10px;align-items:flex-start;background:var(--sage-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+.hint svg{flex:none;width:18px;height:18px;margin-top:2px;color:var(--sage)}
 .hint p{margin:0;flex:1}
 .hint button{color:var(--muted);font-size:13px;flex:none}
 
@@ -136,6 +137,9 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .stone:active{transform:scale(.9)}
 .boulder-ico{width:34px;height:28px;border-radius:44% 56% 40% 60% / 60% 52% 48% 40%;background:var(--rock);flex:none;position:relative}
 .boulder-ico.clear{background:var(--sage)}
+.bcheck{display:grid;place-items:center;color:var(--sage-ink);cursor:pointer}
+.bcheck svg{width:15px;height:15px;opacity:0}
+.bcheck.clear svg{opacity:1}
 .boulder-ico.empty{background:transparent;border:2px dashed var(--rock2)}
 
 /* DO */
@@ -162,8 +166,8 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border-radius:999px;padding:8px 14px;background:var(--surface);box-shadow:var(--shadow);font-size:14px;font-weight:500}
 .chip.on{background:var(--ink);color:var(--bg)}
-.today{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end;background:var(--surface2);border-radius:18px;padding:16px}
-.cairn{display:flex;flex-direction:column-reverse;align-items:center;gap:2px;width:84px;min-height:70px;justify-content:flex-start}
+.today{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:var(--surface2);border-radius:18px;padding:16px}
+.cairn{display:flex;flex-direction:column-reverse;align-items:center;gap:0;width:84px;min-height:70px;justify-content:flex-start}
 .cairn div{height:14px;background:var(--rock2);border-radius:50% 50% 46% 54% / 60% 60% 40% 40%}
 .cairn div.new{background:var(--sage);animation:drop .5s cubic-bezier(.3,1.4,.6,1)}
 .cairn .ground{height:4px;width:84px;background:var(--line);border-radius:2px}
@@ -224,7 +228,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .meadow.do ~ .cairnpanel .prow{border-top-color:color-mix(in srgb,var(--sage-ink) 22%,transparent)}
 .meadow.do ~ .cairnpanel .upnext .stone{border-color:color-mix(in srgb,var(--sage-ink) 70%,transparent)}
 #screen.dumpscreen{min-height:calc(100dvh - 250px - env(safe-area-inset-bottom,0px))}
-.loose{background:var(--surface);padding:13px 26px 13px 28px;box-shadow:var(--shadow);font-size:15px;display:flex;align-items:center;gap:8px}
+.loose{background:var(--surface);padding:13px 26px 13px 28px;box-shadow:var(--shadow);font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
 .loose:nth-child(4n+1){border-radius:48% 52% 42% 58% / 62% 54% 46% 38%}
 .loose:nth-child(4n+2){border-radius:56% 44% 52% 48% / 44% 60% 40% 56%}
 .loose:nth-child(4n+3){border-radius:44% 56% 60% 40% / 54% 42% 58% 46%}
@@ -323,6 +327,11 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto}
 
 .sheet-bg{position:fixed;inset:0;z-index:50;background:rgb(20 26 24/.35);display:flex;align-items:flex-end;justify-content:center}
+/* pop-up boxes sit in the middle of the screen as rounded cards */
+.sheet-bg{align-items:center;padding:16px max(16px,env(safe-area-inset-left,0px))}
+.sheet-bg .sheet{border-radius:24px;padding-bottom:20px;max-height:min(86vh,calc(100dvh - 32px));animation:pop .22s ease-out;box-shadow:0 10px 40px rgb(0 0 0/.2)}
+.sheet-bg .sheet .grab{display:none}
+@keyframes pop{from{transform:scale(.96) translateY(8px);opacity:0}to{transform:none;opacity:1}}
 .sheet{width:100%;max-width:440px;background:var(--surface);border-radius:24px 24px 0 0;display:flex;flex-direction:column;gap:14px;padding:12px max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));animation:up .25s ease-out;max-height:88vh;overflow:auto}
 .sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto}
 .sheet h2{font-size:20px}
@@ -330,7 +339,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .seg button{border-radius:10px;padding:9px 4px;font-weight:600;font-size:14px;color:var(--muted)}
 .seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
 .sheet label{font-size:13px;color:var(--muted);font-weight:600;display:block;margin-bottom:6px}
-.sheet select,.sheet .txtin{width:100%;font:inherit;color:var(--ink);background:var(--surface2);border:0;border-radius:14px;padding:12px 14px}
+.sheet select,.sheet .txtin,.pedit select,.pedit .txtin{width:100%;font:inherit;color:var(--ink);background:var(--surface2);border:0;border-radius:14px;padding:12px 14px}
 .sheet .chip{box-shadow:none;background:var(--surface2)}
 .sheet .chip.on{background:var(--ink);color:var(--bg)}
 .danger{color:#B4533F}
@@ -354,7 +363,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .chip.small{font-size:13px;padding:6px 12px}
 .runsum .chip{box-shadow:none;background:var(--surface2)}
 .runsum .chip.on{background:var(--ink);color:var(--bg)}
-.total{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;background:var(--sand-soft);border-radius:18px;padding:14px 16px}
+.total{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:4px 6px}
 .total b{display:block;font-family:var(--f-display);font-size:30px;line-height:1.05;font-variant-numeric:tabular-nums}
 .total span{font-size:13px;color:var(--muted)}
 .total .fin{text-align:right}
@@ -444,11 +453,44 @@ body.selecting .toast{bottom:calc(130px + env(safe-area-inset-bottom,0px))}
 .gest{margin:-6px 0 0;text-align:center;font-size:13px;color:var(--muted)}
 .editfab{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--rock);color:var(--ink)}
 .editfab svg{width:19px;height:19px}
+.bedit{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--rock);color:var(--ink)}
+.bedit svg{width:16px;height:16px}
+.picker{display:grid;gap:10px}
+.pickchip{display:inline-flex;align-items:center;gap:6px;max-width:100%;text-align:left}
+.pickchip .mini-b{flex:none}
+.picklist{display:grid;gap:2px;max-height:260px;overflow:auto;border-radius:14px;background:var(--surface2);padding:6px}
+.pickgroup{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 8px 4px}
+.pickrow{display:flex;align-items:center;gap:10px;text-align:left;padding:8px;border-radius:10px;width:100%}
+.pickrow .boulder-ico{width:24px;height:20px}
+.pickrow.on{background:var(--surface)}
+.pickrow.new{color:var(--ink);border-top:1px solid var(--line);margin-top:4px;padding-top:10px}
+.pickempty{margin:0;padding:10px;color:var(--muted);font-size:14px}
+.tidy.place{background:var(--sage-soft)}
+.searchbox{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:999px;padding:4px 8px 4px 14px;box-shadow:var(--shadow)}
+.round.searchbtn svg,.round.filt svg{width:20px;height:20px}
+.round.searchbtn.on{background:var(--ink);color:var(--surface)}
+.searchbox.intop{flex:1;min-width:0;padding:2px 4px 2px 12px}
+.searchbox.intop input{padding:8px 0}
+.searchbox svg{width:18px;height:18px;color:var(--muted);flex:none}
+.searchbox input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);padding:9px 0;outline:none}
+.searchbox input::-webkit-search-cancel-button{display:none}
+.searchbox button{flex:none;width:30px;height:30px;border-radius:50%;color:var(--muted);font-size:20px;line-height:1}
+.pedit{display:grid;gap:12px;padding:4px 2px 14px 40px}
+.pedit label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.pedit select{width:100%}
+.prow.open .txt{font-weight:600}
+.pbox{border:2px solid var(--sage);border-radius:18px;margin:6px -8px;padding:0 8px;background:var(--surface)}
+.pbox .prow{border-top:0}
 .pdetail{display:grid;gap:10px;width:100%;text-align:left;margin-top:4px;padding-top:12px;border-top:1px solid var(--surface2)}
-.pdetail .dl{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:baseline;font-size:15px}
+/* long names wrap onto more lines and push the card taller, never squeeze into each other */
+.pdetail{grid-template-columns:auto minmax(0,1fr);column-gap:14px}
+.pdetail .dl{display:grid;grid-column:1 / -1;grid-template-columns:subgrid;gap:8px;align-items:baseline;font-size:15px}
+.pdetail .dl>*{min-width:0;overflow-wrap:anywhere}
+.next h2{max-width:100%;overflow-wrap:anywhere}
 .pdetail .dl>span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .pdetail .dl small{display:block;color:var(--muted);font-size:13px}
-.pdetail .dl b{font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.pdetail .dl b{font-weight:600;display:flex;align-items:flex-start;gap:6px;line-height:1.3;min-width:0}
+.pdetail .dl b>span{flex:none;margin-top:3px}
 .pdetail ul{margin:0;padding:0;list-style:none;display:grid;gap:2px;font-size:14px;color:var(--muted)}
 .burst{position:fixed;width:12px;height:10px;background:var(--sage);pointer-events:none;z-index:70}
 .coach{position:fixed;inset:0;z-index:90;background:transparent;cursor:pointer;animation:fadein .2s ease-out;touch-action:none}
@@ -483,7 +525,7 @@ body.selecting .toast{bottom:calc(130px + env(safe-area-inset-bottom,0px))}
 .cairnfab.on{box-shadow:0 0 0 3px var(--sage),0 8px 20px rgb(0 0 0/.14)}
 .cairnfab.bump{animation:bump .35s ease-out}
 @keyframes bump{40%{transform:scale(1.14)}100%{transform:scale(1)}}
-.cairnfab .mc{display:flex;flex-direction:column-reverse;align-items:center;gap:1px;height:40px;justify-content:flex-start;padding-bottom:2px}
+.cairnfab .mc{display:flex;flex-direction:column-reverse;align-items:center;gap:0;height:40px;justify-content:flex-start;padding-bottom:2px}
 .cairnfab .mc i{display:block;height:6px;background:var(--rock2);flex:none}
 .cairnfab .mc i.new{background:var(--sage);animation:drop .45s cubic-bezier(.3,1.4,.6,1)}
 .cairnfab .mc b{order:-1;display:block;width:40px;height:3px;border-radius:2px;background:var(--line);flex:none}
@@ -559,6 +601,7 @@ let S = Object.assign(blank(), D0 || {}, {
   detail: LS.get("pebbles-detail", false), doFilt: LS.get("pebbles-dofilt", false), cairnOpen: LS.get("pebbles-cairnopen", false), shapeView: LS.get("pebbles-shapeview", "boulders"), openB: {}, sel: null, timer: null, picking: false, tidy: null, justDropped: false, run: LS.get("pebbles-run", null), loading: !D0,
 });
 S.prefs = Object.assign(blank().prefs, S.prefs || {});
+if (!("brk" in S.hints)) S.hints.brk = true; // the break-it-down tip is new, so show it once to everyone
 if (!Array.isArray(S.focus)) S.focus = (S.focus === "all" || String(S.focus).startsWith("a:")) ? [] : [S.focus];
 
 /* ---------------- sync ---------------- */
@@ -657,7 +700,7 @@ const pebblesOf = (bid) => S.pebbles.filter((p) => p.b === bid);
 const bouldersOf = (mid) => S.boulders.filter((b) => b.m === mid);
 // A boulder is only cleared when you say so. All pebbles done but not confirmed = "exhausted": we ask whether there's more to it.
 const allDone = (b) => { const ps = pebblesOf(b.id); return ps.length > 0 && ps.every((p) => p.done); };
-const cleared = (b) => allDone(b) && !!b.cleared;
+const cleared = (b) => !!b.cleared && (allDone(b) || pebblesOf(b.id).length === 0);
 const exhausted = (b) => allDone(b) && !b.cleared;
 const needsPebble = (b) => !b.hidden && (pebblesOf(b.id).length === 0 || exhausted(b));
 const areaOfP = () => "";
@@ -682,6 +725,12 @@ function focusChips(extraStyle) {
 }
 /* Pebble order: every boulder's first pebble comes before any boulder's second pebble (then by when, "Not now", and list order),
    and two pebbles from the same boulder never sit side by side when it can be helped. */
+/* Do: a plain line of pebbles. No priority, timing or boulder rules: just list order.
+   Skipping sends one to the back of the line; pulling one back puts it at the front. The filters decide which pebbles are in the line. */
+function line(list) {
+  const idx = new Map(S.pebbles.map((p, i) => [p.id, i]));
+  return [...list].sort((a, b) => (a.skip || 0) - (b.skip || 0) || idx.get(a.id) - idx.get(b.id));
+}
 function order(list) {
   const base = list.map((p, i) => [p, i]).sort((a, b) => rank(a[0].when) - rank(b[0].when) || a[1] - b[1]);
   const depth = new Map(), cnt = {};
@@ -694,7 +743,7 @@ function order(list) {
   }
   return out;
 }
-const queue = () => order(S.pebbles.filter((p) => !p.done && inFocus(p) && (!(S.prefs.oneWhen || []).length || S.prefs.oneWhen.includes(p.when || "someday"))));
+const queue = () => line(S.pebbles.filter((p) => !p.done && inFocus(p) && (!(S.prefs.oneWhen || []).length || S.prefs.oneWhen.includes(p.when || "someday"))));
 const shapeCount = () => S.dumps.length + S.boulders.filter((b) => !b.hidden && pebblesOf(b.id).length === 0 && boulderInFocus(b)).length;
 const checkCount = () => S.boulders.filter((b) => !b.hidden && exhausted(b) && boulderInFocus(b)).length;
 const tidyCount = () => shapeCount() + checkCount();
@@ -824,14 +873,15 @@ function guideArt(step) {
 function render(fromCloud) {
   if (!S.loading) {
     if (!S.prefs.clearMig) { S.boulders.forEach((b) => { if (allDone(b)) b.cleared = true; }); S.prefs.clearMig = true; }
-    S.boulders.forEach((b) => { if (b.cleared && !allDone(b)) delete b.cleared; });
+    S.boulders.forEach((b) => { if (b.cleared && pebblesOf(b.id).length && !allDone(b)) delete b.cleared; });
   }
   if (!fromCloud && stamp()) { LS.set(CACHE, dataOf()); scheduleCloud(); }
   LS.set("pebbles-focus", S.focus); LS.set("pebbles-mode", S.doMode); LS.set("pebbles-hints", S.hints); LS.set("pebbles-run", S.run);
-  $("#top").innerHTML = `
-    ${S.tab === "do" ? `<span style="flex:1"></span>${filtBtn()}<button class="round eyetop ${S.detail ? "on" : ""}" data-act="eye" aria-pressed="${!!S.detail}" aria-label="${S.detail ? "Switch to the simple view" : "Show details"}">${I.eye}</button>` : `<button class="focus" data-act="focus" aria-label="Change focus"><small>Focus</small><span>${esc(focusName())}</span></button>`}
+  $("#top").hidden = S.tab === "dump"; // Dump keeps it simple: no focus, tips or add buttons up top
+  $("#top").innerHTML = S.tab === "dump" ? "" : `
+    ${S.tab === "do" ? `<span style="flex:1"></span>${filtBtn()}<button class="round eyetop ${S.detail ? "on" : ""}" data-act="eye" aria-pressed="${!!S.detail}" aria-label="${S.detail ? "Switch to the simple view" : "Show details"}">${I.eye}</button>` : `${S.tab === "shape" && (S.searchOpen || S.q) ? `<div class="searchbox intop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="shapeq" type="search" value="${esc(S.q || "")}" placeholder="Search" autocomplete="off" aria-label="Search">${S.q ? `<button data-act="clearq" aria-label="Clear search">×</button>` : ""}</div>` : `<span style="flex:1"></span>`}${S.tab === "shape" ? `<button class="round searchbtn ${S.searchOpen || S.q ? "on" : ""}" data-act="togsearch" aria-expanded="${!!(S.searchOpen || S.q)}" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>` : ""}<button class="round filt ${S.focus.length ? "on" : ""}" data-act="focus" aria-label="Filter by mountain: ${esc(focusName())}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/></svg></button>`}
     <button class="round" data-act="coach" aria-label="Show tips for this screen">${I.help}</button>
-    <button class="round plus" data-act="add" aria-label="Add">${I.plus}</button>`;
+    ${S.tab === "shape" ? "" : `<button class="round plus" data-act="add" aria-label="Add">${I.plus}</button>`}`;
   const tc = tidyCount();
   $("#tabs").innerHTML = [["dump", "Dump", I.tabDump], ["shape", "Shape" + (tc ? ` · ${tc}` : ""), I.tabShape], ["do", "Do", I.tabDo]]
     .map(([k, l, ic]) => `<button class="tab ${S.tab === k ? "on" : ""}" data-act="tab" data-k="${k}" aria-current="${S.tab === k}">${ic}${l}</button>`).join("");
@@ -917,9 +967,7 @@ function viewDo() {
   return `<div class="sky do" id="sky" aria-hidden="true"></div><div class="meadow do" id="doMeadow" aria-hidden="true"><div class="g back"></div><div class="g front"></div></div>${modeSeg()}${doFilterRow()}${hint("do", "Only look at the next pebble. Each one you move makes its boulder smaller, and every boulder you clear brings the summit closer.")}
     ${main}
     ${S.cairnOpen ? `<div class="cairnpanel" id="cairnPanel">
-    <button class="today" data-act="cairn" style="width:100%;text-align:left" aria-label="See what you moved today"><div class="cairn"><span class="ground"></span>${cairn}</div>
-      <div><h3>${doneToday ? `${doneToday} pebble${doneToday > 1 ? "s" : ""} moved today` : "Your cairn starts here"}</h3>
-      <p>${rest.length ? `${rest.length} more waiting. You don't need to look at them yet.` : p ? "This is the last one here." : "Every pebble you finish adds a stone."}${doneToday ? ` <span style="text-decoration:underline;text-underline-offset:2px">See your cairn</span>` : ""}</p></div></button>
+    ${cairnCard(doneToday, q.length)}
     ${rest.length ? `<div class="upnext"><span class="eyebrow" style="padding:4px 0">Still waiting</span>${rest.map((x) => pebRow(x)).join("")}</div>` : ""}
     </div>` : ""}
 `;
@@ -928,7 +976,9 @@ function viewDo() {
 function cairnFab() {
   if (S.loading || S.tab !== "do") return "";
   const n = S.pebbles.filter((x) => isToday(x.doneAt)).length, k = Math.min(n, 6);
-  const stones = Array.from({ length: k }, (_, i) => `<i class="${S.justDropped && i === k - 1 ? "new" : ""}" style="width:${34 - i * 4}px;border-radius:${SHAPES[i % SHAPES.length]}"></i>`).join("");
+  // a tippy, hand-stacked look: a wide flat base, each stone smaller and nudged the other way with a little tilt
+  const W = [34, 25, 20, 15, 11, 8], H = [7, 7, 6, 6, 5, 5], X = [0, 3, -2, 2, -2, 1], R = [-3, 6, -8, 9, -10, 8];
+  const stones = Array.from({ length: k }, (_, i) => `<i class="${S.justDropped && i === k - 1 ? "new" : ""}" style="width:${W[i]}px;height:${H[i]}px;border-radius:${SHAPES[i % SHAPES.length]};transform:translateX(${X[i]}px) rotate(${R[i]}deg)"></i>`).join("");
   return `<button class="cairnfab ${S.cairnOpen ? "on" : ""}" id="cairnFab" data-act="cairnfab" aria-expanded="${!!S.cairnOpen}" aria-label="${n} pebble${n === 1 ? "" : "s"} moved today. ${S.cairnOpen ? "Hide" : "Show"} your cairn and list"><span class="mc">${stones}<b></b></span></button>`;
 }
 function runDetail(p) {
@@ -952,17 +1002,37 @@ function pebbleDetail(p) {
     ${nextUp.length ? `<div class="dl"><span>Then</span><ul>${nextUp.map((x) => `<li>${esc(x.text)}</li>`).join("")}</ul></div>` : ""}
   </div>`;
 }
+// in Shape, tapping a pebble opens it right there to edit; tap it again to close
+function pebEditor(p) {
+  return `<div class="pedit">
+    <input class="txtin" data-pe="text" data-id="${p.id}" value="${esc(p.text)}" autocomplete="off" aria-label="Tiny step">
+    <div><label>Chips away at</label>${boulderPicker("pe:" + p.id, p.text, p.b)}</div>
+    <div><label>When</label><div class="chips">${WHEN.map((w) => `<button type="button" class="chip small ${(p.when || "someday") === w ? "on" : ""}" data-act="pwhen" data-id="${p.id}" data-v="${w}">${whenLabel[w]}</button>`).join("")}</div></div>
+    <div><label>About how long</label><div class="chips">${[2, 5, 10, 15, 25, 45].map((m) => `<button type="button" class="chip small ${(p.mins || 10) === m ? "on" : ""}" data-act="pmins" data-id="${p.id}" data-v="${m}">${m} min</button>`).join("")}</div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><button type="button" class="btn ghost danger" style="padding:8px 4px" data-act="pdel" data-id="${p.id}">${S.pdel === p.id ? "Tap again to delete" : "Delete"}</button>
+      <button type="button" class="btn" style="padding:8px 16px" data-act="openp" data-id="${p.id}">Done</button></div></div>`;
+}
+// adding a pebble inside a boulder opens right there, like editing one
+function newPebbleBox(b) {
+  const n = S.newP;
+  return `<div class="pbox"><div class="pedit" style="padding-left:2px;padding-top:12px">
+    <input class="txtin" id="npin" value="${esc(n.text || "")}" autocomplete="off" placeholder="e.g. Put one bag of clothes in the car" aria-label="New pebble for ${esc(b.name)}">
+    <div><label>When</label><div class="chips">${WHEN.map((w) => `<button type="button" class="chip small ${n.when === w ? "on" : ""}" data-act="npwhen" data-v="${w}">${whenLabel[w]}</button>`).join("")}</div></div>
+    <div><label>About how long</label><div class="chips">${[2, 5, 10, 15, 25, 45].map((m) => `<button type="button" class="chip small ${n.mins === m ? "on" : ""}" data-act="npmins" data-v="${m}">${m} min</button>`).join("")}</div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><button type="button" class="btn ghost" style="padding:8px 4px" data-act="npclose">${n.added ? "Done" : "Cancel"}</button>
+      <button type="button" class="btn primary" style="padding:8px 18px" data-act="npadd">Add</button></div></div></div>`;
+}
 function pebRow(p, showTrail = true, selKind = "") {
-  const b = p.b && B(p.b);
-  return `<div class="row prow"${selKind ? ` data-selid="${p.id}" data-selkind="${selKind}"` : ""}><button class="stone ${p.done ? "done" : ""}" style="--r:${shapeOf(p.id)}" data-act="toggle" data-id="${p.id}" aria-label="${p.done ? "Mark not done" : "Mark done"}: ${esc(p.text)}">${I.check}</button>
-    <button class="txt ${p.done ? "done" : ""}" data-act="edit" data-id="${p.id}">${esc(p.text)}${showTrail && b ? `<span class="sub">${esc(b.name)}</span>` : ""}</button>
-    ${p.done ? "" : `<span class="tag ${p.when === "today" ? "today" : ""}">${whenLabel[p.when] || "Someday"}</span>`}</div>`;
+  const b = p.b && B(p.b), inline = S.tab === "shape", open = inline && S.openP === p.id;
+  return `${open ? `<div class="pbox">` : ""}<div class="row prow ${open ? "open" : ""}"${selKind ? ` data-selid="${p.id}" data-selkind="${selKind}"` : ""}><button class="stone ${p.done ? "done" : ""}" style="--r:${shapeOf(p.id)}" data-act="toggle" data-id="${p.id}" aria-label="${p.done ? "Mark not done" : "Mark done"}: ${esc(p.text)}">${I.check}</button>
+    <button class="txt ${p.done ? "done" : ""}" data-act="${inline ? "openp" : "edit"}" data-id="${p.id}"${inline ? ` aria-expanded="${open}"` : ""}>${esc(p.text)}${showTrail && b ? `<span class="sub">${esc(b.name)}</span>` : ""}</button>
+    ${p.done ? "" : `<span class="tag ${p.when === "today" ? "today" : ""}">${whenLabel[p.when] || "Someday"}</span>`}</div>${open ? pebEditor(p) + "</div>" : ""}`;
 }
 
 /* ---------------- timed run ---------------- */
 const fmtDur = (m) => m < 60 ? `${m} min` : `${Math.floor(m / 60)} hr${m % 60 ? ` ${m % 60} min` : ""}`;
 const fmtClock = (ms) => new Date(ms).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-const runQueue = () => order(S.pebbles.filter((p) => !p.done && (!S.prefs.runWhen.length || S.prefs.runWhen.includes(p.when || "someday")) && inFocus(p) && (!S.run || p.id !== S.run.pid)));
+const runQueue = () => line(S.pebbles.filter((p) => !p.done && (!S.prefs.runWhen.length || S.prefs.runWhen.includes(p.when || "someday")) && inFocus(p) && (!S.run || p.id !== S.run.pid)));
 const runLeft = () => { const r = S.run; return !r ? 0 : r.over ? 0 : r.paused ? r.left : Math.max(0, r.end - Date.now()); };
 const finishAt = () => Date.now() + runLeft() + runQueue().reduce((a, p) => a + (p.mins || 10), 0) * 60000;
 function startPebble(p, count) {
@@ -1028,14 +1098,23 @@ function doFilterRow() {
 const modeSeg = () => `<div class="seg two" role="tablist"><button class="${S.doMode === "one" ? "on" : ""}" data-act="domode" data-v="one">One at a time</button><button class="${S.doMode === "run" ? "on" : ""}" data-act="domode" data-v="run">Timed run</button></div>`;
 const minsBtn = (p) => `<button class="mins" data-act="mins" data-id="${p.id}" aria-label="Change minutes for ${esc(p.text)}">${p.mins || 10} min</button>`;
 // timed run: the cairn panel opened from the little cairn button (finished pebbles, tap a stone to undo)
+function cairnCard(done, waiting) {
+  const n = Math.min(done, 7);
+  const W = [68, 52, 42, 33, 25, 19, 14], H = [14, 13, 12, 11, 10, 9, 8], X = [0, 6, -4, 4, -4, 3, -2], R = [-3, 6, -8, 9, -10, 8, -6];
+  const stones = Array.from({ length: n }, (_, i) => `<div class="${S.justDropped && i === n - 1 ? "new" : ""}" style="width:${W[i]}px;height:${H[i]}px;border-radius:${SHAPES[i % SHAPES.length]};transform:translateX(${X[i]}px) rotate(${R[i]}deg)"></div>`).join("");
+  const fin = finishedToClear().length;
+  return `<div class="today"><div class="cairn"><span class="ground"></span>${stones}</div>
+    <div><h3>${done ? `${done}/${done + waiting} pebbles moved today` : "Your cairn starts here"}</h3>
+      ${done ? "" : `<p>Every pebble you finish adds a stone.</p>`}
+      ${fin ? `<button class="btn" style="margin-top:8px;padding:8px 14px;font-size:14px" data-act="clearfin">${I.check}Clear ${fin} finished</button>` : ""}</div></div>`;
+}
 function runCairnPanel() {
   if (!S.cairnOpen) return "";
   const list = S.pebbles.filter((p) => p.done && isToday(p.doneAt)).sort((a, b) => b.doneAt - a.doneAt);
   const n = Math.min(list.length, 8);
   const cairn = Array.from({ length: n }, (_, i) => `<div style="width:${70 - i * 7}px;border-radius:${SHAPES[i % SHAPES.length]}"></div>`).join("");
   return `<div class="cairnpanel" id="cairnPanel">
-    <button class="today" data-act="cairn" style="width:100%;text-align:left" aria-label="Open your cairn"><div class="cairn"><span class="ground"></span>${cairn}</div>
-      <div><h3>${list.length ? `${list.length} pebble${list.length > 1 ? "s" : ""} moved today` : "Your cairn starts here"}</h3><p>${list.length ? "Tap a green stone below to put one back." : "Every pebble you finish adds a stone."}</p></div></button>
+    ${cairnCard(list.length, runQueue().length + (S.run ? 1 : 0))}
     ${list.some((p) => !p.hidden) ? `<div class="upnext"><span class="eyebrow" style="padding:4px 0">Completed today</span>${list.filter((p) => !p.hidden).map((p) => pebRow(p)).join("")}</div>` : ""}
   </div>`;
 }
@@ -1096,14 +1175,19 @@ function pileColors() { let prev = -1; return S.dumps.map((d) => { let c = hashI
 function viewDump() {
   const pile = pileColors().reverse(); // newest rock lands on top of the heap
   return `<div class="sky" id="sky" aria-hidden="true"></div><div class="meadow" aria-hidden="true"><div class="g back"></div><div class="g front"></div></div>
-    <div><h1 style="font-size:28px">Empty your pockets</h1><p style="margin:4px 0 0;color:var(--muted)">Big, small, half-formed. It all goes in the pile.</p></div>
+    <div style="margin-top:clamp(12px,8vh,80px)"><h1 style="font-size:28px">Empty your pockets</h1></div>
     <form class="dumpbox" data-form="dump"><input id="dumpin" placeholder="What's on your mind?" autocomplete="off" aria-label="New thought"><button class="round plus" style="box-shadow:none" aria-label="Add to pile">${I.plus}</button></form>
     ${hint("dump", "Don't sort while you dump. You'll decide what's a mountain, a boulder or a pebble later, in Shape.")}
-    <div class="section-h"><h2>The pile${S.dumps.length ? ` · ${S.dumps.length}` : ""}</h2>${S.dumps.length ? `<button class="btn primary" style="padding:10px 18px;font-size:15px" data-act="tidy">Shape the pile ${I.arrow}</button>` : ""}</div>
+    <div class="section-h" style="justify-content:flex-end;min-height:8px">${S.dumps.length ? `<button class="btn primary" style="padding:10px 18px;font-size:15px" data-act="tidy">Shape the pile ${I.arrow}</button>` : ""}</div>
     ${S.dumps.length ? `<div class="pile">${pile.map(([d, c]) => `<div class="loose s${c}" style="--rot:${(hashId(d.id) % 9) - 4}deg">${esc(d.text)}<button data-act="deldump" data-id="${d.id}" aria-label="Remove ${esc(d.text)}">×</button></div>`).join("")}</div>`
       : `<div class="empty" style="margin-top:auto">Your head is clear. Nice.</div>`}`;
 }
 
+// Shape search: matches names of mountains, boulders and pebbles (a boulder also matches when one of its pebbles does)
+const qText = () => (S.q || "").trim().toLowerCase();
+const hit = (t) => !qText() || String(t || "").toLowerCase().includes(qText());
+const pebHit = (p) => hit(p.text) || (p.b && B(p.b) && hit(B(p.b).name));
+const boulderHit = (b) => hit(b.name) || pebblesOf(b.id).some((p) => !p.hidden && hit(p.text)) || (b.m && M(b.m) && hit(M(b.m).name));
 function viewShape() {
   const sc = shapeCount(), cc = checkCount();
   const f = focusKeys();
@@ -1112,30 +1196,35 @@ function viewShape() {
   const tabs = `<div class="seg" role="tablist" aria-label="Shape view">${[["mountains", "Mountains"], ["boulders", "Boulders"], ["pebbles", "Pebbles"]].map(([k, l]) => `<button class="${view === k ? "on" : ""}" role="tab" aria-selected="${view === k}" data-act="shapeview" data-v="${k}">${l}</button>`).join("")}</div>`;
   let body = "";
   if (view === "mountains") {
-    const done = S.mountains.filter((m) => m.done);
-    const ms = S.mountains.filter((m) => !m.done && (!f.length || f.includes(m.id)));
-    body = `<div class="list">${ms.map((m) => { const s = mStats(m.id); return `<button class="mcard" data-act="openm" data-id="${m.id}">${mountainSVG(s.pct, { v: mtnV(m) })}
-      <span style="flex:1;min-width:0"><h3>${esc(m.name)}</h3><p>${s.bs ? `${s.bc} of ${s.bs} boulders cleared · ${s.pd} of ${s.ps} pebbles` : "No boulders yet"}</p><span class="bar"><i style="width:${Math.round(s.pct * 100)}%"></i></span></span></button>`; }).join("")}
+    const done = S.mountains.filter((m) => m.done && (hit(m.name) || bouldersOf(m.id).some(boulderHit)));
+    const mHit = (m) => hit(m.name) || bouldersOf(m.id).some(boulderHit);
+    const ms = S.mountains.filter((m) => !m.done && (!f.length || f.includes(m.id)) && mHit(m));
+    body = `<div class="list">
       ${!f.length ? `<button class="addp" style="border:0;background:var(--surface2);border-radius:18px;padding:14px" data-act="add" data-kind="mountain"><span class="mini-m" style="width:26px;height:20px"></span>${ms.length ? "Add a mountain" : "Add your first mountain, a big goal. Then move boulders onto it."}</button>` : ""}
+${ms.map((m) => { const s = mStats(m.id); return `<button class="mcard" data-act="openm" data-id="${m.id}">${mountainSVG(s.pct, { v: mtnV(m) })}
+      <span style="flex:1;min-width:0"><h3>${esc(m.name)}</h3><p>${s.bs ? `${s.bc} of ${s.bs} boulders cleared · ${s.pd} of ${s.ps} pebbles` : "No boulders yet"}</p><span class="bar"><i style="width:${Math.round(s.pct * 100)}%"></i></span></span></button>`; }).join("")}
       ${f.length && !ms.length ? `<div class="empty">Your Focus is on Loose boulders only.</div>` : ""}
       ${done.length ? `<div class="section-h" style="margin-top:8px"><h2 style="font-size:18px">Summited</h2><span class="eyebrow">${done.length}</span></div>${done.map((m) => `<button class="mcard" data-act="openm" data-id="${m.id}" style="opacity:.85">${mountainSVG(1, { v: mtnV(m) })}<span style="flex:1;min-width:0"><h3>${esc(m.name)}</h3><p style="display:flex;gap:6px;align-items:center">${FLAG.replace('width="20" height="20"', 'width="15" height="15"')}Summited ${new Date(m.doneAt || Date.now()).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</p></span></button>`).join("")}` : ""}</div>`;
   } else if (view === "boulders") {
     const groups = [];
     if (!f.length || f.includes("loose")) groups.push(["Loose boulders", S.boulders.filter((b) => !b.m && !b.hidden)]);
     [...S.mountains].sort((a, b) => alpha(a.name, b.name)).filter((m) => !f.length || f.includes(m.id)).forEach((m) => groups.push([m.name, bouldersOf(m.id).filter((b) => !b.hidden)]));
-    const shown = groups.filter(([, bs]) => bs.length);
+    const shown = groups.map(([l, bs]) => [l, bs.filter(boulderHit)]).filter(([, bs]) => bs.length);
     body = shown.length ? `<div class="list">${shown.map(([l, bs]) => `<div class="section-h">${S.sel ? groupCk(bs.map((b) => b.id), esc(l)) : `<h2 style="font-size:18px">${esc(l)}</h2>`}${S.sel ? `<span class="eyebrow">${bs.length}</span>` : `<span class="eyebrow">${bs.length} boulder${bs.length > 1 ? "s" : ""}</span>`}</div>${bs.map((b) => S.sel ? boulderSel(b) : boulderCard(b, true)).join("")}`).join("")}</div>`
-      : `<div class="empty">No boulders here yet. Add one with +.</div>`;
+      : `<div class="empty">${qText() ? `No boulders match “${esc(S.q.trim())}”.` : "No boulders here yet."}</div>`;
+    if (!S.sel) body = `<button class="addp" style="border:0;background:var(--surface2);border-radius:18px;padding:14px;margin-bottom:10px;width:100%" data-act="add" data-kind="boulder"><span class="boulder-ico empty" style="width:26px;height:22px"></span>Add a boulder</button>` + body;
   } else {
-    const ps = S.pebbles.filter((p) => !p.hidden && inFocus(p));
+    const ps = S.pebbles.filter((p) => !p.hidden && inFocus(p) && pebHit(p));
     const open = order(ps.filter((p) => !p.done)), done = ps.filter((p) => p.done);
     const groups = WHEN.map((w) => [whenLabel[w], open.filter((p) => (p.when || "someday") === w)]).filter(([, l]) => l.length);
     if (done.length) groups.push(["Finished", done]);
     body = groups.length ? groups.map(([l, list]) => `<div class="section-h">${S.sel ? groupCk(list.map((p) => p.id), l) : `<h2 style="font-size:18px">${l}</h2>`}<span class="eyebrow">${list.length}</span></div><div class="bcard" style="padding-block:2px">${list.map((p) => S.sel ? pebbleSel(p) : pebRow(p, true, "pebbles")).join("")}</div>`).join("")
-      : `<div class="empty">No pebbles here yet. Add one with +, or break a boulder down.</div>`;
+      : `<div class="empty">${qText() ? `No pebbles match “${esc(S.q.trim())}”.` : "No pebbles here yet."}</div>`;
+    if (!S.sel) body = `<button class="addp" style="border:0;background:var(--surface2);border-radius:18px;padding:14px;margin-bottom:10px;width:100%" data-act="add" data-kind="pebble"><span class="stone"></span>Add a pebble</button>` + body;
   }
   return `${sc ? `<button class="tidy" data-act="tidy"><span class="n">${sc}</span><span><h3>Ready to shape</h3><p>Sort the pile and break boulders into pebbles, one card at a time.</p></span><span class="go">${I.arrow}</span></button>` : ""}
     ${cc ? `<button class="tidy check" data-act="checkrun"><span class="n">${cc}</span><span><h3>Finished boulders?</h3><p>Every pebble on ${cc === 1 ? "this boulder is" : "these boulders is"} moved. Finished, or more to do?</p></span><span class="go">${I.arrow}</span></button>` : ""}
+    ${loosePebbles().length && S.boulders.some((b) => !b.hidden) ? `<button class="tidy place" data-act="placeflow"><span class="n">${loosePebbles().length}</span><span><h3>Place loose pebbles</h3><p>${loosePebbles().length === 1 ? "1 pebble isn't" : `${loosePebbles().length} pebbles aren't`} on a boulder yet. Pick a home for each, one at a time.</p></span><span class="go">${I.arrow}</span></button>` : ""}
     ${hint("shape", "Shaping is where big things get small. A pebble is something you could start in the next five minutes and finish in one sitting.")}
     ${tabs}
     ${view === "mountains" ? "" : S.sel ? groupCk(view === "boulders" ? S.boulders.filter((b) => !b.hidden && boulderInFocus(b)).map((b) => b.id) : S.pebbles.filter((p) => !p.hidden && inFocus(p)).map((p) => p.id), `All ${view}`, "all")
@@ -1213,12 +1302,12 @@ function bulkApply(op, v) {
 function boulderCard(b, compact) {
   const ps = pebblesOf(b.id); const d = ps.filter((p) => p.done).length;
   const vis = ps.filter((p) => !p.hidden);
-  const state = ps.length === 0 ? "empty" : cleared(b) ? "clear" : "";
-  const openUp = !compact || S.openB[b.id];
-  return `<div class="bcard"${compact ? ` data-selid="${b.id}" data-selkind="boulders"` : ""}><div class="bhead"><span class="boulder-ico ${state}"></span><button class="name" data-act="editb" data-id="${b.id}"><h3>${esc(b.name)}</h3><small>${ps.length ? (state === "clear" ? "Cleared" : `${d} of ${ps.length} pebbles moved`) : "Still one heavy piece"}${b.when && b.when !== "someday" ? ` · ${whenLabel[b.when]}` : ""}</small></button>
-    ${ps.length === 0 ? `<button class="need" data-act="breakb" data-id="${b.id}">Break it down</button>` : exhausted(b) ? `<button class="need" data-act="checkb" data-id="${b.id}">Finished?</button>` : compact ? `<button class="mini-link" style="flex:none" data-act="openb" data-id="${b.id}" aria-expanded="${!!openUp}">${openUp ? "Hide" : `Show ${vis.length}`}</button>` : ""}</div>
+  const state = cleared(b) ? "clear" : ps.length === 0 ? "empty" : "";
+  const openUp = !compact || S.openB[b.id] || (qText() && !hit(b.name) && ps.some((p) => hit(p.text)));
+  return `<div class="bcard"${compact ? ` data-selid="${b.id}" data-selkind="boulders"` : ""}><div class="bhead"><button class="boulder-ico bcheck ${state}" data-act="checkbo" data-id="${b.id}" aria-pressed="${state === "clear"}" aria-label="${state === "clear" ? "Mark not done" : "Mark done"}: ${esc(b.name)}">${I.check}</button><button class="name" data-act="${compact ? "openb" : "editb"}" data-id="${b.id}"${compact ? ` aria-expanded="${!!openUp}"` : ""}><h3>${esc(b.name)}</h3><small>${ps.length ? (state === "clear" ? "Cleared" : `${d} of ${ps.length} pebbles moved`) : "Still one heavy piece"}${b.when && b.when !== "someday" ? ` · ${whenLabel[b.when]}` : ""}</small></button>
+    ${ps.length === 0 ? `<button class="need" data-act="breakb" data-id="${b.id}">Break it down</button>` : exhausted(b) ? `<button class="need" data-act="checkb" data-id="${b.id}">Finished?</button>` : compact && openUp ? `<button class="bedit" data-act="editb" data-id="${b.id}" aria-label="Edit this boulder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3z"/></svg></button>` : ""}</div>
     ${openUp ? `${vis.map((p) => pebRow(p, false)).join("")}
-    ${ps.length ? `<button class="addp" data-act="add" data-b="${b.id}"><span class="stone"></span>Add a pebble</button>` : ""}` : ""}</div>`;
+    ${ps.length ? (S.tab === "shape" && S.newP && S.newP.b === b.id ? newPebbleBox(b) : `<button class="addp" data-act="${S.tab === "shape" ? "addinb" : "add"}" data-b="${b.id}"><span class="stone"></span>Add a pebble</button>`) : ""}` : ""}</div>`;
 }
 const FLAG = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-2.5 4L16 12H5" fill="currentColor"/></svg>`;
 /* the summit: a dramatic finish for a whole mountain */
@@ -1340,8 +1429,8 @@ function viewTidy() {
   else if (t.step === "break") body = `<p class="q">${bo && pebblesOf(bo.id).length ? "All its pebbles are moved. What's the next small step?" : "Break it into pebbles. What's the very first small step?"}</p>
       <div class="newp">${t.tmp.list.map((x, k) => `<div class="row"><span class="stone" style="--r:${SHAPES[k % 5]}"></span><span class="txt">${esc(x)}</span><button class="btn ghost" style="padding:4px 8px" data-act="unp" data-k="${k}" aria-label="Remove">×</button></div>`).join("")}</div>
       <form class="field" data-form="pebble"><input id="pin" placeholder="${t.tmp.list.length ? "And then…" : "e.g. Look up three ideas online"}" autocomplete="off" aria-label="New pebble"><button class="btn primary">Add</button></form>
-      <div class="starters">${["Look up…", "Make a list of…", "Spend 10 minutes on…", "Text or call…", "Put ___ by the door"].map((s) => `<button data-act="starter" data-v="${esc(s)}">${esc(s)}</button>`).join("")}</div>
-      <div class="hint" style="background:var(--sand-soft)">${I.leaf}<p>Still feels heavy? Break it again. Could you start it in the next five minutes? Then it's a pebble.</p></div>`;
+      <div class="starters">${[["Set a 5-minute timer", "Spend 5 minutes on: {t}"], ["Do one small piece", "Do one small part of: {t} – "], ["Just get ready", "Get out what I need for: {t}"], ["Find the first step", "Figure out the first step for: {t}"], ["Make a messy version", "Do a quick, messy version of: {t}"], ["Schedule it", "Pick a day and time for: {t}"], ["Ask for help", "Text someone to help with: {t}"]].map(([l, tpl]) => `<button data-act="starter" data-v="${esc(tpl.replace("{t}", name || "it"))}">${l}</button>`).join("")}</div>
+      ${hint("brk", "Still feels heavy? Break it again. Could you start it in the next five minutes? Then it's a pebble.")}`;
   else if (t.step === "when") body = `<p class="q">When would you like to move ${t.tmp.list.length > 1 ? "these pebbles" : "this pebble"}?</p><div class="opt">
       ${WHEN.map((w) => `<button class="chip" data-act="when" data-v="${w}">${whenLabel[w]}</button>`).join("")}</div>`;
   const kindLabel = it.kind === "check" ? "Boulder · all pebbles moved" : it.kind === "boulder" || t.tmp.kind === "boulder" ? "Boulder" : t.tmp.kind === "pebble" ? "Pebble" : "From the pile";
@@ -1371,13 +1460,12 @@ function keepSheetFields() { if ($("#stext")) sheet.text = $("#stext").value; if
 function renderSheet() {
   if (!sheet) return;
   const s = sheet; const edit = !!s.id;
-  const title = edit ? `Edit ${s.kind}` : "Add something";
+  const title = edit ? `Edit ${s.kind}` : `Add a ${s.kind}`;
   const ar = areas();
   $("#sheet").innerHTML = `<div class="sheet-bg" data-act="closesheet"><form class="sheet" data-form="sheet" role="dialog" aria-label="${title}"><span class="grab"></span>
     <h2>${title}</h2>
-    ${edit ? "" : `<div class="seg">${["pebble", "boulder", "mountain"].map((k) => `<button type="button" class="${s.kind === k ? "on" : ""}" data-act="skind" data-k="${k}">${cap(k)}</button>`).join("")}</div>`}
     <div><label for="stext">${s.kind === "mountain" ? "Big goal" : s.kind === "boulder" ? "Main task" : "Tiny step"}</label><input class="txtin" id="stext" value="${esc(s.text || "")}" autocomplete="off" placeholder="${s.kind === "mountain" ? "e.g. Launch Reading Therapy online" : s.kind === "boulder" ? "e.g. Clean out the closet" : "e.g. Put one bag of clothes in the car"}"></div>
-    ${s.kind === "pebble" ? `${edit ? `<div><label for="sbsel">Chips away at</label>${bouldersSelect(s.b)}</div>` : s.b && B(s.b) ? `<p style="margin:0;font-size:14px;color:var(--muted)">Goes on <b style="color:var(--ink)">${esc(B(s.b).name)}</b></p>` : `<p style="margin:0;font-size:14px;color:var(--muted)">Goes in Pebbles on their own. You can move it onto a boulder later by tapping it.</p>`}
+    ${s.kind === "pebble" ? `<div><label>Chips away at</label>${boulderPicker("sheet", s.text, s.b)}</div>
       <div><label>When</label><div class="chips">${WHEN.map((w) => `<button type="button" class="chip ${s.when === w ? "on" : ""}" data-act="swhen" data-v="${w}">${whenLabel[w]}</button>`).join("")}</div></div>
       <div><label>About how long</label><div class="chips">${[2, 5, 10, 15, 25, 45].map((m) => `<button type="button" class="chip ${(s.mins || 10) === m ? "on" : ""}" data-act="smins" data-v="${m}">${m} min</button>`).join("")}</div></div>` : ""}
     ${s.kind === "boulder" ? `<div><label for="smsel">On which mountain</label><select id="smsel"><option value="">None yet (loose boulder)</option>${[...S.mountains].sort((a, b) => alpha(a.name, b.name)).map((m) => `<option value="${m.id}" ${m.id === s.m ? "selected" : ""}>${esc(m.name)}</option>`).join("")}</select></div>
@@ -1429,6 +1517,53 @@ function tickTimer() {
   if (left <= 0) { stopTimer(); chime(); render(); toast(`<span><b>Time's up</b>Done with this pebble, or keep going?</span>`); }
 }
 const newPebble = (o) => ({ id: uid(), text: "", b: null, when: "today", done: false, skip: 0, mins: 10, ...o });
+
+/* ---------------- boulder picker: suggestions first, then search every boulder, or make a new one ---------------- */
+const STOP = new Set("the a an and or of to for in on at my your our with from by into about up out it its this that next more some all any get make do read".split(" "));
+const toks = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.slice(0, 5));
+function suggestBoulders(text, current, n = 3) {
+  const pool = S.boulders.filter((b) => !b.hidden);
+  const mine = new Set(toks(text));
+  const score = (b) => { const bt = new Set([...toks(b.name), ...toks(b.m && M(b.m) ? M(b.m).name : "")]); let k = 0; mine.forEach((w) => { if (bt.has(w)) k += 2; }); pebblesOf(b.id).forEach((p) => toks(p.text).forEach((w) => { if (mine.has(w)) k += 0.5; })); return k; };
+  let ranked = mine.size ? pool.map((b) => [b, score(b)]).filter(([, k]) => k > 0).sort((a, b) => b[1] - a[1]).map(([b]) => b) : [];
+  // fill up with the boulders you used most recently
+  const recent = []; for (let i = S.pebbles.length - 1; i >= 0 && recent.length < 6; i--) { const b = S.pebbles[i].b && B(S.pebbles[i].b); if (b && !b.hidden && !recent.includes(b)) recent.push(b); }
+  ranked = [...ranked, ...recent.filter((b) => !ranked.includes(b))];
+  if (current && B(current)) ranked = [B(current), ...ranked.filter((b) => b.id !== current)];
+  return ranked.slice(0, n);
+}
+S.pickQ = {}; S.pickOpen = {};
+function boulderPicker(ctx, text, current) {
+  const sug = suggestBoulders(text, current), open = !!S.pickOpen[ctx], q = (S.pickQ[ctx] || "").trim(), ql = q.toLowerCase();
+  const chip = (b) => `<button type="button" class="chip small pickchip ${b && b.id === current ? "on" : ""}" data-act="pick" data-ctx="${ctx}" data-v="${b ? b.id : ""}">${b ? `<span class="mini-b"></span>${esc(b.name)}` : "On its own"}</button>`;
+  let list = "";
+  if (open) {
+    const match = (b) => !ql || b.name.toLowerCase().includes(ql) || (b.m && M(b.m) && M(b.m).name.toLowerCase().includes(ql));
+    const row = (b) => `<button type="button" class="pickrow ${b.id === current ? "on" : ""}" data-act="pick" data-ctx="${ctx}" data-v="${b.id}"><span class="boulder-ico ${b.id === current ? "clear" : ""}"></span><span>${esc(b.name)}</span></button>`;
+    const groups = [...S.mountains].filter((m) => !m.done).sort((a, b) => alpha(a.name, b.name)).map((m) => [m.name, bouldersOf(m.id).filter((b) => !b.hidden && match(b))]);
+    groups.push(["Loose boulders", S.boulders.filter((b) => !b.m && !b.hidden && match(b))]);
+    const shown = groups.filter(([, bs]) => bs.length);
+    const exact = S.boulders.some((b) => b.name.toLowerCase() === ql);
+    list = `<div class="picksearch"><input class="txtin" type="search" data-pickq="${ctx}" value="${esc(S.pickQ[ctx] || "")}" placeholder="Search boulders, or type a new one" autocomplete="off" aria-label="Search boulders"></div>
+      <div class="picklist">${shown.map(([l, bs]) => `<div class="pickgroup">${esc(l)}</div>${bs.map(row).join("")}`).join("") || `<p class="pickempty">No boulders match.</p>`}
+      ${q && !exact ? `<button type="button" class="pickrow new" data-act="pick" data-ctx="${ctx}" data-v="new"><span class="boulder-ico empty"></span><span>New boulder: <b>${esc(q)}</b></span></button>` : ""}</div>`;
+  }
+  return `<div class="picker"><div class="chips">${sug.map(chip).join("")}${chip(null)}</div>
+    <button type="button" class="mini-link" style="align-self:flex-start" data-act="pickmore" data-ctx="${ctx}">${open ? "Hide the list" : "Pick from all boulders, or make a new one"}</button>${list}</div>`;
+}
+// the place-loose-pebbles flow: one pebble at a time
+const loosePebbles = () => S.pebbles.filter((p) => !p.done && !p.hidden && !p.b);
+function placeSheet() {
+  sheet = { place: true }; S.placeSkip = S.placeSkip || [];
+  const left = loosePebbles().filter((p) => !S.placeSkip.includes(p.id)), p = left[0];
+  $("#sheet").innerHTML = `<div class="sheet-bg" data-act="closesheet"><div class="sheet" role="dialog" aria-label="Place loose pebbles"><span class="grab"></span>
+    ${p ? `<span class="eyebrow">Which boulder does this chip away at? · ${left.length} left</span>
+      <h2 style="font-size:24px;line-height:1.2">${esc(p.text)}</h2>
+      ${boulderPicker("flow:" + p.id, p.text, null)}
+      <div class="foot"><button class="btn ghost" data-act="placeskip" data-id="${p.id}">Skip for now</button><button class="btn" data-act="closesheet">Done</button></div>`
+    : `<h2>All placed</h2><p style="margin:0;color:var(--muted)">Every pebble you didn't skip is on a boulder now.</p><button class="btn primary" style="justify-content:center" data-act="closesheet">Done</button>`}
+  </div></div>`;
+}
 
 /* ---------------- settings ---------------- */
 const BGS = { periwinkle: ["Periwinkle", "#D9DEF5", "#191C2B"], lilac: ["Lilac", "#E4DCF0", "#1D1926"], sky: ["Sky", "#D8E7F0", "#152029"], sage: ["Sage", "#E3E7E0", "#161B1A"], sand: ["Sand", "#EEE6D6", "#1E1B16"], stone: ["Stone", "#E2E2DF", "#18191A"] };
@@ -1489,7 +1624,7 @@ function settingsSheet(still) {
     <div><label>Font</label><div class="seg two">${[["hand", "Handwritten"], ["serif", "Serif"]].map(([v, l]) => `<button type="button" class="${(pr.font || "hand") === v ? "on" : ""}" data-act="setfont" data-v="${v}" style="font-family:${v === "serif" ? '"Tinos","Liberation Serif","Times New Roman",serif' : '"Gochi Hand",cursive'};font-size:17px">${l}</button>`).join("")}</div></div>
     <div><label>Background</label><div class="swatches">${Object.entries(BGS).map(([k, [l, c1, c2]]) => `<button class="swatch ${(pr.bg || "periwinkle") === k ? "on" : ""}" data-act="setbg" data-v="${k}" aria-label="${l}"><i style="background:linear-gradient(135deg, ${c1} 50%, ${c2} 50%)"></i>${l}</button>`).join("")}</div></div>
     <div>
-      ${sw("hintsOn", "Hint boxes", "The little purple tips on each screen")}
+      ${sw("hintsOn", "Hint boxes", "The little green tips on each screen")}
       ${sw("auto", "Roll into the next pebble", "In a timed run, when time's up, mark it done and start the next")}
       ${sw("chime", "Sound when time's up", "Plays while Pebbles is open. On iPhone, check the ring/silent switch")}
       ${pr.chime !== false ? `<div class="opt" style="padding-bottom:10px">${Object.entries(SOUNDS).map(([k, [l]]) => `<button class="chip ${(pr.sound || "chime") === k ? "on" : ""}" style="display:flex;justify-content:space-between;align-items:center" data-act="setsound" data-v="${k}">${l}<span style="font-size:13px;opacity:.75">${(pr.sound || "chime") === k ? "Selected · tap to hear" : "Tap to hear"}</span></button>`).join("")}</div>` : ""}
@@ -1515,7 +1650,7 @@ const TIPS = {
     { sel: ".round.eyetop", text: "details on / off", side: "below", spot: 1 },
     { sel: "#cairnFab", text: "your cairn: tap to open", side: "left", spot: 1 },
     { sel: ".round.filt", text: "filter by mountain or time", side: "left", spot: 1 },
-    { sel: ".round.plus", text: "Add anything", side: "below", spot: 1 },
+    { sel: ".round.plus", text: "Add a pebble", side: "below", spot: 1 },
     { sel: ".gear", text: "Settings", side: "below", spot: 1 },
   ],
   run: [
@@ -1553,14 +1688,22 @@ const TIPS = {
   ],
   "shape-boulders": [
     { sel: ".seg", text: "Switch views", side: "below", spot: 1 },
+    { sel: ".round.searchbtn", text: "search", side: "below", spot: 1 },
+    { sel: ".tidy.place", text: "Give loose pebbles a boulder, one at a time", side: "below", spot: 1 },
+    { sel: ".round.filt", text: "filter by mountain", side: "left", spot: 1 },
     { sel: '[data-act="selstart"]', text: "Change lots at once", side: "below", spot: 1 },
-    { sel: ".bcard[data-selid] .name", text: "Tap a name to edit or move it onto a mountain", side: "below", spot: 1 },
-    { sel: '[data-act="openb"]', text: "See its pebbles", side: "above", spot: 1 },
+    { sel: ".bcard[data-selid] .bcheck", text: "Tap the stone when it's done", side: "right", spot: 1 },
+    { sel: ".bcard[data-selid] .name", text: "Tap a boulder to see its pebbles", side: "below", spot: 1 },
+    { sel: ".bedit", text: "Edit it, or move it onto a mountain", side: "left", spot: 1 },
   ],
   "shape-pebbles": [
     { sel: ".seg", text: "Switch views", side: "below", spot: 1 },
+    { sel: ".round.searchbtn", text: "search", side: "below", spot: 1 },
+    { sel: ".tidy.place", text: "Give loose pebbles a boulder, one at a time", side: "below", spot: 1 },
+    { sel: ".round.filt", text: "filter by mountain", side: "left", spot: 1 },
     { sel: '[data-act="selstart"]', text: "Change lots at once", side: "below", spot: 1 },
     { sel: ".prow[data-selid] .stone", text: "Tap the stone when it's done", side: "right", spot: 1 },
+    { sel: ".prow[data-selid] .txt", text: "Tap a pebble to open and edit it", side: "below", spot: 1 },
     { sel: ".prow[data-selid]", text: "Or hold a row to start selecting", side: "below", spot: 1 },
   ],
   select: [
@@ -1829,7 +1972,7 @@ const bflySVG = (c) => `<svg viewBox="0 0 40 40" aria-hidden="true"><g fill="non
   <path d="M14.6 25.4C16 24 18 24.8 20 26.8L25.2 32.6C26.4 34.2 24.8 35.6 23.2 34.6L16.6 28.6C15 27.6 13.6 26.8 14.6 25.4Z" fill="#2B2626"/><circle cx="14.2" cy="24.8" r="1.8" fill="#2B2626"/></svg>`;
 let bfly = null, bflyT = null, bflyN = Math.floor(Math.random() * 3);
 const isNight = () => getComputedStyle(document.documentElement).getPropertyValue("--stars").trim() === "1";
-function bflySchedule(ms) { clearTimeout(bflyT); bflyT = setTimeout(bflyVisit, ms ?? (240000 + Math.random() * 120000)); }
+function bflySchedule(ms) { clearTimeout(bflyT); bflyT = setTimeout(bflyVisit, ms ?? 60000); }
 function bflyPath(x0, y0, x1, y1, wob) {
   const cx = (x0 + x1) / 2 + (Math.random() - 0.5) * 80, cy = Math.min(y0, y1) - 40 - Math.random() * 60, out = [];
   for (let k = 0; k <= 24; k++) { const t = k / 24, u = 1 - t; const x = u * u * x0 + 2 * u * t * cx + t * t * x1, y = u * u * y0 + 2 * u * t * cy + t * t * y1 + Math.sin(t * Math.PI * 7) * wob * Math.sin(t * Math.PI);
@@ -1867,8 +2010,38 @@ function bflyLeave(scared) {
 }
 function bflyCheck() { if (bfly && bfly.state !== "out" && (!document.body.contains(bfly.card) || S.tab !== "do")) bflyLeave(true); }
 window.addEventListener("scroll", () => { if (bfly && bfly.state === "rest") bflyLeave(true); }, { passive: true });
-bflySchedule(60000 + Math.random() * 60000); // the first visit comes a little sooner
+bflySchedule(60000); // a visit about once a minute
 window.pebblesButterfly = () => { bflySchedule(0); }; // handy for trying it out
+
+/* the open pebble's name and boulder save as soon as you change them */
+document.addEventListener("change", (e) => {
+  const el = e.target.closest && e.target.closest("[data-pe]"); if (!el) return;
+  const p = P(el.dataset.id); if (!p) return;
+  if (el.dataset.pe === "text") { // save quietly so a tap on a chip right after still lands
+    const t = el.value.trim(); if (!t) return; p.text = t;
+    const lab = el.closest(".pedit")?.previousElementSibling?.querySelector(".txt"); if (lab && lab.firstChild) lab.firstChild.textContent = t;
+    if (stamp()) { LS.set(CACHE, dataOf()); scheduleCloud(); } return;
+  }
+  if (el.dataset.pe === "b") { p.b = el.value || null; if (p.b) unhide(p); }
+  render();
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.matches && e.target.matches('[data-pe="text"]')) { e.preventDefault(); e.target.blur(); }
+  if (e.key === "Enter" && e.target.id === "npin") { e.preventDefault(); document.querySelector('[data-act="npadd"]')?.click(); } });
+
+/* typing in the Shape search filters as you go, keeping your place in the box */
+document.addEventListener("input", (e) => {
+  if (e.target.id !== "shapeq") return;
+  S.q = e.target.value; const pos = e.target.selectionStart; render();
+  const el = $("#shapeq"); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
+});
+
+document.addEventListener("input", (e) => {
+  const c = e.target.dataset && e.target.dataset.pickq; if (!c) return;
+  S.pickQ[c] = e.target.value; const pos = e.target.selectionStart;
+  if (c === "sheet") { keepSheetFields(); sheet.noFocus = true; renderSheet(); } else if (c.startsWith("flow:")) placeSheet(); else render();
+  const el = document.querySelector(`[data-pickq="${c}"]`); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.dataset && e.target.dataset.pickq) { e.preventDefault(); document.querySelector(`[data-act="pick"][data-ctx="${e.target.dataset.pickq}"]:is(.pickrow)`)?.click(); } });
 
 /* hold a row in Shape to start selecting */
 let lpT = null, lpFired = false, lpXY = null;
@@ -1935,7 +2108,7 @@ document.addEventListener("click", (e) => {
     case "datasave": { try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([exportText()], { type: "application/json" })); a.download = `pebbles-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove(); } catch (e) { toast("<span>Saving a file isn't allowed here. Use Copy my data instead.</span>"); } return; }
     case "dataimport": importData($("#datain").value); return;
     case "bflynow": closeSheet(); S.tab = "do"; render(); bflySchedule(700); return;
-    case "resettips": S.prefs.hintsOn = true; S.hints = { do: true, dump: true, shape: true }; closeSheet(); S.guide = true; S.gstep = 0; break;
+    case "resettips": S.prefs.hintsOn = true; S.hints = { do: true, dump: true, shape: true, brk: true }; closeSheet(); S.guide = true; S.gstep = 0; break;
     case "coachclose": closeCoach(); return;
     case "coachguide": closeCoach(); S.guide = true; S.gstep = 0; break;
     case "hint": S.hints[d.k] = false; break;
@@ -1966,6 +2139,34 @@ document.addEventListener("click", (e) => {
     case "stoptimer": stopTimer(); break;
     case "toggle": { const p = P(d.id); if (p.done) { p.done = false; delete p.doneAt; unhide(p); } else complete(p); if (sheet && sheet.cairn) { render(); cairnSheet(true); return; } break; }
     case "cairn": cairnSheet(); return;
+    case "checkbo": { const b = B(d.id); if (!b) break;
+      if (cleared(b)) { delete b.cleared; (b.autoDone || []).forEach((id) => { const p = P(id); if (p) { p.done = false; delete p.doneAt; } }); delete b.autoDone; }
+      else { const now = Date.now(), ids = []; pebblesOf(b.id).forEach((p) => { if (!p.done) { p.done = true; p.doneAt = now; ids.push(p.id); } }); b.autoDone = ids; b.cleared = true; }
+      break; }
+    case "addinb": S.newP = { b: d.b, text: "", when: "today", mins: 10 }; S.openP = null; S.openB[d.b] = true; render(); setTimeout(() => $("#npin")?.focus(), 30); return;
+    case "npwhen": S.newP.text = $("#npin")?.value || ""; S.newP.when = d.v; break;
+    case "npmins": S.newP.text = $("#npin")?.value || ""; S.newP.mins = +d.v; break;
+    case "npclose": S.newP = null; break;
+    case "npadd": { const t = ($("#npin")?.value || "").trim(); if (!t) { $("#npin")?.focus(); return; }
+      const nb = B(S.newP.b); S.pebbles.push(newPebble({ text: t, b: S.newP.b, when: S.newP.when, mins: S.newP.mins })); if (nb) delete nb.cleared;
+      S.newP = { ...S.newP, text: "", added: true }; render(); setTimeout(() => $("#npin")?.focus(), 30); return; }
+    case "clearq": S.q = ""; break;
+    case "togsearch": if (S.searchOpen || S.q) { S.searchOpen = false; S.q = ""; render(); } else { S.searchOpen = true; render(); setTimeout(() => $("#shapeq")?.focus(), 30); } return;
+    case "pickmore": { const c = d.ctx; S.pickOpen[c] = !S.pickOpen[c]; if (c === "sheet") { keepSheetFields(); sheet.noFocus = true; renderSheet(); return; } if (c.startsWith("flow:")) { placeSheet(); return; } break; }
+    case "pick": {
+      const c = d.ctx, [kind, id] = c.split(":"); let bid = d.v;
+      if (bid === "new") { const name = (S.pickQ[c] || "").trim(); if (!name) return; const nb = { id: uid(), name: cap(name), m: null }; S.boulders.push(nb); bid = nb.id; }
+      S.pickQ[c] = ""; S.pickOpen[c] = false;
+      if (kind === "sheet") { keepSheetFields(); sheet.b = bid || null; sheet.noFocus = true; renderSheet(); return; }
+      const p = P(id); if (p) { p.b = bid || null; if (p.b) { unhide(p); const bb = B(p.b); if (bb) delete bb.cleared; } }
+      if (kind === "flow") { render(); placeSheet(); return; }
+      break; }
+    case "placeflow": S.placeSkip = []; placeSheet(); return;
+    case "placeskip": S.placeSkip.push(d.id); placeSheet(); return;
+    case "openp": S.openP = S.openP === d.id ? null : d.id; S.pdel = null; break;
+    case "pwhen": { const p = P(d.id); if (p) p.when = d.v; break; }
+    case "pmins": { const p = P(d.id); if (p) p.mins = +d.v; break; }
+    case "pdel": { if (S.pdel !== d.id) { S.pdel = d.id; break; } S.pebbles = S.pebbles.filter((p) => p.id !== d.id); S.openP = null; S.pdel = null; break; }
     case "edit": { const p = P(d.id); openSheet({ id: p.id, kind: "pebble", text: p.text, b: p.b, when: p.when || "someday", mins: p.mins }); return; }
     case "editb": { const b = B(d.id); openSheet({ id: b.id, kind: "boulder", text: b.name, m: b.m, cat: b.cat || "", noFocus: true }); return; }
     case "summit": summit(d.id); return;
