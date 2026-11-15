@@ -204,6 +204,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .meadow.do .back{top:0;height:auto}
 .meadow.do .front{top:96px;height:auto}
 /* text that sits on the front grass: --sage-ink is white on light-mode grass and deep green on dark-mode grass */
+.skymsg{text-align:center;font-weight:600;color:var(--muted);margin:0}
 .meadow ~ .empty{color:var(--sage-ink);font-weight:600;position:relative;top:32px}
 .meadow.do ~ .swipe .sw{color:var(--sage-ink)}
 .meadow.do ~ .upnext,.meadow.do ~ .upnext .txt,.meadow.do ~ .upnext .eyebrow,.meadow.do ~ .upnext h2,.meadow.do ~ .btn.ghost{color:var(--sage-ink)}
@@ -526,7 +527,7 @@ body.has-fab .app{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
 
 
 <div class="app">
-  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.2</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.3</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
   <header class="top" id="top"></header>
   <main class="screen" id="screen"></main>
 </div>
@@ -911,6 +912,9 @@ function placeMeadow() {
   } else if (sky) {
     const back = $(".meadow .back");
     if (back) sky.style.setProperty("--hz", Math.round(back.getBoundingClientRect().top - 40) + "px");
+    // "Your head is clear": float it halfway between the text box and the top of the bushes
+    const msg = $(".skymsg"), box = $(".dumpbox");
+    if (msg && box && back) { msg.style.transform = ""; const m = msg.getBoundingClientRect(), mid = (box.getBoundingClientRect().bottom + back.getBoundingClientRect().top - 60) / 2; msg.style.transform = `translateY(${Math.round(mid - (m.top + m.height / 2))}px)`; }
   }
 }
 window.addEventListener("resize", placeMeadow);
@@ -1182,7 +1186,7 @@ function viewDump() {
     ${hint("dump", "Don't sort while you dump. You'll decide what's a mountain, a boulder or a pebble later, in Shape.")}
     <div class="section-h" style="justify-content:flex-end;min-height:8px">${S.dumps.length ? `<button class="btn primary" style="padding:10px 18px;font-size:15px" data-act="tidy">Shape the pile ${I.arrow}</button>` : ""}</div>
     ${S.dumps.length ? `<div class="pile">${pile.map(([d, c]) => `<div class="loose s${c}" style="--rot:${(hashId(d.id) % 9) - 4}deg">${esc(d.text)}<button data-act="deldump" data-id="${d.id}" aria-label="Remove ${esc(d.text)}">×</button></div>`).join("")}</div>`
-      : `<div class="empty" style="margin-top:auto">Your head is clear. Nice.</div>`}`;
+      : `<div class="skymsg">Your head is clear. Nice.</div>`}`;
 }
 
 // Shape search: matches names of mountains, boulders and pebbles (a boulder also matches when one of its pebbles does)
