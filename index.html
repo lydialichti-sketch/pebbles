@@ -557,8 +557,17 @@ const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const LS = {
   get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} if (k === "pebbles-data") IDB.put(v); },
 };
+/* a second, sturdier copy of your data in IndexedDB, used to restore if the main copy ever goes missing */
+const IDB = {
+  db: null,
+  open() { if (this.db) return this.db; this.db = new Promise((res, rej) => { try { const r = indexedDB.open("pebbles", 1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } }); return this.db; },
+  put(v) { this.open().then((db) => { const t = db.transaction("kv", "readwrite"); t.objectStore("kv").put(JSON.stringify(v), "data"); t.objectStore("kv").put(Date.now(), "at"); }).catch(() => {}); },
+  get() { return this.open().then((db) => new Promise((res) => { const q = db.transaction("kv").objectStore("kv").get("data"); q.onsuccess = () => { try { res(q.result ? JSON.parse(q.result) : null); } catch (e) { res(null); } }; q.onerror = () => res(null); })).catch(() => null); },
+};
+// ask the browser to keep Pebbles' storage instead of clearing it when space runs low
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
 const SHAPES = ["52% 48% 46% 54% / 58% 50% 50% 42%","46% 54% 60% 40% / 50% 56% 44% 50%","58% 42% 50% 50% / 46% 58% 42% 54%","50% 50% 42% 58% / 54% 44% 56% 46%","42% 58% 54% 46% / 60% 44% 56% 40%"];
 const shapeOf = (id) => SHAPES[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % SHAPES.length];
 const alpha = (a, b) => a.localeCompare(b, undefined, { sensitivity: "base" });
@@ -968,6 +977,7 @@ function viewDo() {
     ${main}
     ${S.cairnOpen ? `<div class="cairnpanel" id="cairnPanel">
     ${cairnCard(doneToday, q.length)}
+    ${movedTodayList()}
     ${rest.length ? `<div class="upnext"><span class="eyebrow" style="padding:4px 0">Still waiting</span>${rest.map((x) => pebRow(x)).join("")}</div>` : ""}
     </div>` : ""}
 `;
@@ -1098,6 +1108,11 @@ function doFilterRow() {
 const modeSeg = () => `<div class="seg two" role="tablist"><button class="${S.doMode === "one" ? "on" : ""}" data-act="domode" data-v="one">One at a time</button><button class="${S.doMode === "run" ? "on" : ""}" data-act="domode" data-v="run">Timed run</button></div>`;
 const minsBtn = (p) => `<button class="mins" data-act="mins" data-id="${p.id}" aria-label="Change minutes for ${esc(p.text)}">${p.mins || 10} min</button>`;
 // timed run: the cairn panel opened from the little cairn button (finished pebbles, tap a stone to undo)
+// everything you checked off today, newest first; tap a green stone to put one back
+function movedTodayList() {
+  const list = S.pebbles.filter((p) => p.done && !p.hidden).sort((a, b) => (b.doneAt || 0) - (a.doneAt || 0));
+  return list.length ? `<div class="upnext"><span class="eyebrow" style="padding:4px 0">Finished, not cleared yet</span>${list.map((p) => pebRow(p)).join("")}</div>` : "";
+}
 function cairnCard(done, waiting) {
   const n = Math.min(done, 7);
   const W = [68, 52, 42, 33, 25, 19, 14], H = [14, 13, 12, 11, 10, 9, 8], X = [0, 6, -4, 4, -4, 3, -2], R = [-3, 6, -8, 9, -10, 8, -6];
@@ -1115,7 +1130,7 @@ function runCairnPanel() {
   const cairn = Array.from({ length: n }, (_, i) => `<div style="width:${70 - i * 7}px;border-radius:${SHAPES[i % SHAPES.length]}"></div>`).join("");
   return `<div class="cairnpanel" id="cairnPanel">
     ${cairnCard(list.length, runQueue().length + (S.run ? 1 : 0))}
-    ${list.some((p) => !p.hidden) ? `<div class="upnext"><span class="eyebrow" style="padding:4px 0">Completed today</span>${list.filter((p) => !p.hidden).map((p) => pebRow(p)).join("")}</div>` : ""}
+    ${movedTodayList()}
   </div>`;
 }
 function movedToday(open) {
@@ -2102,10 +2117,10 @@ document.addEventListener("click", (e) => {
     case "setsound": primeAudio(); S.prefs.sound = d.v; playSound(d.v); render(); settingsSheet(true); return;
     case "setpref": S.prefs[d.k] = el.checked; render(); settingsSheet(true); return;
     case "datasheet": dataSheet(); return;
-    case "datacopy": { const t = exportText(), ta = $("#dataout"); const ok = () => toast("<span><b>Copied</b>Now paste it into Pebbles on the other side.</span>");
+    case "datacopy": { LS.set("pebbles-backup-at", Date.now()); const t = exportText(), ta = $("#dataout"); const ok = () => toast("<span><b>Copied</b>Now paste it into Pebbles on the other side.</span>");
       const fallback = () => { try { ta.focus(); ta.select(); document.execCommand("copy"); ok(); } catch (e) { toast("<span>Select the text in the box and copy it.</span>"); } };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback(); return; }
-    case "datasave": { try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([exportText()], { type: "application/json" })); a.download = `pebbles-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove(); } catch (e) { toast("<span>Saving a file isn't allowed here. Use Copy my data instead.</span>"); } return; }
+    case "datasave": { LS.set("pebbles-backup-at", Date.now()); try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([exportText()], { type: "application/json" })); a.download = `pebbles-${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove(); } catch (e) { toast("<span>Saving a file isn't allowed here. Use Copy my data instead.</span>"); } return; }
     case "dataimport": importData($("#datain").value); return;
     case "bflynow": closeSheet(); S.tab = "do"; render(); bflySchedule(700); return;
     case "resettips": S.prefs.hintsOn = true; S.hints = { do: true, dump: true, shape: true, brk: true }; closeSheet(); S.guide = true; S.gstep = 0; break;
@@ -2254,6 +2269,19 @@ document.addEventListener("submit", (e) => {
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { if (sheet) closeSheet(); else if (S.guide) { S.guide = false; LS.set("pebbles-guided", true); render(); } else if (S.tidy) { S.tidy = null; render(); } } });
 render(true);
 startSync();
+const hasData = (d) => d && ["mountains", "boulders", "pebbles", "dumps"].some((k) => (d[k] || []).length);
+IDB.get().then((d) => {
+  const here = dataOf();
+  if (hasData(d) && !hasData(here)) { applyData(d); toast("<span><b>Welcome back</b>Your pebbles were restored from the backup copy.</span>", 5000); }
+  else if (hasData(here)) IDB.put(here);
+});
+/* outside Claude, a gentle nudge about once a week to save a copy you keep yourself */
+setTimeout(() => {
+  if (window.claude || !hasData(dataOf())) return;
+  const last = LS.get("pebbles-backup-at", 0), nag = LS.get("pebbles-backup-nag", 0), week = 7 * 864e5;
+  if (Date.now() - last > week && Date.now() - nag > week) { LS.set("pebbles-backup-nag", Date.now());
+    toast(`<span style="flex:1;min-width:0"><b>Keep a copy of your pebbles</b>Save a backup now and then, just in case.</span><button class="btn" style="padding:8px 14px;flex:none;color:var(--ink);background:var(--surface)" data-act="datasheet">Back up</button>`, 10000); }
+}, 4000);
 </script>
 
 </body>
