@@ -176,7 +176,7 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .dumpbox input::placeholder{color:var(--muted)}
 .pile{display:flex;flex-wrap:wrap-reverse;justify-content:center;align-items:flex-end;gap:0 2px;padding:14px 4px 10px;margin-top:auto}
 /* --ps scales the whole pile: big rocks when it's small, shrinking to fit as it grows */
-.pile .loose{margin-top:calc(-9px * var(--ps,1));padding:calc(10px * var(--ps,1)) calc(18px * var(--ps,1)) calc(10px * var(--ps,1)) calc(20px * var(--ps,1));font-size:calc(14px * var(--ps,1));gap:calc(8px * var(--ps,1));transform:rotate(var(--rot,0deg));box-shadow:0 2px 3px rgb(0 0 0/.16),0 6px 14px rgb(0 0 0/.12)}
+.pile .loose{margin-top:calc(-9px * var(--ps,1));padding:max(8px, calc(12px * var(--ps,1))) max(16px, calc(22px * var(--ps,1))) max(8px, calc(12px * var(--ps,1))) max(20px, calc(26px * var(--ps,1)));max-width:86%;font-size:calc(14px * var(--ps,1));gap:calc(8px * var(--ps,1));transform:rotate(var(--rot,0deg));box-shadow:0 2px 3px rgb(0 0 0/.16),0 6px 14px rgb(0 0 0/.12)}
 /* the meadow behind the Dump screen: two layers of grass in the palette's greens */
 .app{position:relative;z-index:0}
 .meadow{position:fixed;left:0;right:0;bottom:0;height:66vh;z-index:-1;pointer-events:none}
@@ -225,7 +225,9 @@ h1,h2,h3{font-family:var(--f-hand);font-weight:400;margin:0;text-wrap:balance;le
 .loose:nth-child(4n+2){border-radius:56% 44% 52% 48% / 44% 60% 40% 56%}
 .loose:nth-child(4n+3){border-radius:44% 56% 60% 40% / 54% 42% 58% 46%}
 .loose:nth-child(4n){border-radius:52% 48% 46% 54% / 40% 58% 42% 60%}
-.loose button{color:inherit;opacity:.6;font-size:18px;line-height:1}
+.loose button{color:inherit;opacity:.6;font-size:18px;line-height:1;flex:none}
+/* words sit centered on the rock and wrap onto more lines instead of spilling past its rounded edges */
+.pile .loose .lt{flex:1;min-width:0;text-align:center;line-height:1.2;overflow-wrap:anywhere;text-wrap:balance}
 .pile .loose button{font-size:calc(18px * var(--ps,1))}
 /* real stone colors, the same in light and dark: whites, beiges, tans, grays and charcoals */
 .loose.s0{background:#FBFAF6;color:#26302A} .loose.s1{background:#EFE7D6;color:#26302A} .loose.s2{background:#DCCAA6;color:#2A2416}
@@ -530,7 +532,7 @@ body.has-fab .app{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}
 
 
 <div class="app">
-  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.6</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+  <div class="brand"><h1><i></i>Pebbles<small class="ver">v1.7</small></h1><span style="display:flex;align-items:center;gap:10px"><span class="sync" id="sync">On this device</span><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
   <header class="top" id="top"></header>
   <main class="screen" id="screen"></main>
 </div>
@@ -934,7 +936,7 @@ function fitPile() {
   const bottom = innerHeight - parseFloat(getComputedStyle(app).paddingBottom || 96);
   const room = bottom - (head ? head.getBoundingClientRect().bottom : 300) - 10;
   let ps = 2.2;
-  for (; ps > 0.62; ps -= 0.08) { pile.style.setProperty("--ps", ps.toFixed(2)); if (pile.getBoundingClientRect().height <= room) break; }
+  for (; ps > 0.5; ps -= 0.06) { pile.style.setProperty("--ps", ps.toFixed(2)); if (pile.getBoundingClientRect().height <= room) break; }
 }
 window.addEventListener("resize", fitPile);
 try { document.fonts && document.fonts.ready.then(placeMeadow); } catch (e) {}
@@ -1229,7 +1231,7 @@ function viewDump() {
     <form class="dumpbox" data-form="dump"><input id="dumpin" placeholder="What's on your mind?" autocomplete="off" aria-label="New thought"><button class="round plus" style="box-shadow:none" aria-label="Add to pile">${I.plus}</button></form>
     ${hint("dump", "Don't sort while you dump. You'll decide what's a mountain, a boulder or a pebble later, in Shape.")}
     <div class="section-h" style="justify-content:flex-end;min-height:8px">${S.dumps.length ? `<button class="btn primary" style="padding:10px 18px;font-size:15px" data-act="tidy">Shape the pile ${I.arrow}</button>` : ""}</div>
-    ${S.dumps.length ? `<div class="pile">${pile.map(([d, c]) => `<div class="loose s${c}" style="--rot:${(hashId(d.id) % 9) - 4}deg">${esc(d.text)}<button data-act="deldump" data-id="${d.id}" aria-label="Remove ${esc(d.text)}">×</button></div>`).join("")}</div>`
+    ${S.dumps.length ? `<div class="pile">${pile.map(([d, c]) => `<div class="loose s${c}" style="--rot:${(hashId(d.id) % 9) - 4}deg"><span class="lt">${esc(d.text)}</span><button data-act="deldump" data-id="${d.id}" aria-label="Remove ${esc(d.text)}">×</button></div>`).join("")}</div>`
       : `<div class="skymsg ${S.dumpEnter ? "fadein" : ""}">Your head is clear. Nice.</div>`}`;
 }
 
